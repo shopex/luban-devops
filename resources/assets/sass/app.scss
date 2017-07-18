@@ -1,0 +1,111 @@
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+body{
+	padding-top: 60px;
+}
+h1{
+	font-size: 2rem;
+}
+
+.search-form{position: relative}
+#search-ipt{padding-left:10px;}
+.search-form .dropdown-menu{display:none;}
+.search-opts{min-height:190px;}
+.search-opts a{display: block;padding:5px 10px; text-decoration: none; color:#666;}
+.search-opts a:hover{background: $component-active-bg; color:$component-active-color;}
+.search-panel-footer{border-top:1px solid #ccc; margin:0 10px; padding:10px 0 5px 0; text-align: right}
+
+
+.srv-api{
+
+}
+.srv-body{
+	padding-left: 3rem;
+}
+.api-body{
+	padding:0.5rem;
+	border:1px solid $panel-default-border;
+	background: $panel-bg;
+	border-top:none;
+}
+.srv-api-header{
+	margin-top: 1.5rem;	
+	font-size: 1.8rem;
+	padding:0.5rem 1rem;
+	border:1px solid $panel-default-border;
+}
+.param_key{
+	color:#4b6f8b;
+}
+.param_key .required{
+	color: #29506d;
+	font-weight: bold;
+}
+.c-key{width:20%;}
+.c-ipt{width:30%;}
+.c-type{width:10%;}
+.srv-api-response{padding:0.5rem;}
+.srv-api-response-body{
+	padding: 0.5rem; 
+	border:1px solid #ccc;
+	background: #fffcf7;
+	font-size: 0.9em;
+}
+.api-title{
+	color: #999;
+	font-size: 0.8em;
+	float: right
+}
+.srv-header{
+	margin-top: 1.5rem;	
+	background: $panel-default-heading-bg;
+	border-radius: $panel-border-radius;
+	border:1px solid $panel-default-border;
+	padding:0.5rem 1rem;
+	font-size:1.8rem;
+	cursor: pointer;
+}
+.p-online, .p-offline{
+	border-radius: 100%;
+	display: inline-block;
+	width:10px;
+	height:10px;
+	margin-right:0.5rem;
+}
+.p-online{
+	background: #0c0;
+}
+.p-offline{
+	background: #f00;	
+}
+.srv-api-header{
+	cursor: pointer;
+}
+.api-summary{
+	padding: 0.5rem;
+}
+
+.footer{
+	color: #999;
+	text-align: center;
+	padding:10px;
+}
+.b-alert{
+	color:red;
+}
+.b-info{
+	color:#999;
+}
+.code{
+	font-family: "Courier New", Courier, mono;
+	font-size: 0.9em;
+	white-space:pre-wrap;  
+    white-space:-moz-pre-wrap;  
+    white-space:-pre-wrap;  
+    white-space:-o-pre-wrap;  
+    word-wrap:break-word;  		
+}

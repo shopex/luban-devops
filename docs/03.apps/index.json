@@ -1,0 +1,36 @@
+{
+    "child": {
+        "01.php.md": {
+            "next": {
+                "path": "04.mkserv/README.md",
+                "title": "编写服务"
+            },
+            "prev": {
+                "path": "03.apps/README.md",
+                "title": "前端业务系统"
+            },
+            "title": "php"
+        },
+        "README.md": {
+            "next": {
+                "path": "03.apps/01.php.md",
+                "title": "php"
+            },
+            "prev": {
+                "path": "02.install.md",
+                "title": "安装"
+            },
+            "title": "前端业务系统"
+        }
+    },
+    "nav": [
+        {
+            "path": "/README.md",
+            "title": "鲁班微服务架构"
+        },
+        {
+            "path": "03.apps/README.md",
+            "title": "前端业务系统"
+        }
+    ]
+}

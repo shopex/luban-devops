@@ -1,0 +1,33 @@
+{
+    "child": {
+        "01.golang.md": {
+            "next": null,
+            "prev": {
+                "path": "04.mkserv/README.md",
+                "title": "编写服务"
+            },
+            "title": "Golang"
+        },
+        "README.md": {
+            "next": {
+                "path": "04.mkserv/01.golang.md",
+                "title": "Golang"
+            },
+            "prev": {
+                "path": "03.apps/01.php.md",
+                "title": "php"
+            },
+            "title": "编写服务"
+        }
+    },
+    "nav": [
+        {
+            "path": "/README.md",
+            "title": "鲁班微服务架构"
+        },
+        {
+            "path": "04.mkserv/README.md",
+            "title": "编写服务"
+        }
+    ]
+}

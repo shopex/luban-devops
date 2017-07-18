@@ -1,0 +1,40 @@
+{
+    "child": {
+        "01.intro.md": {
+            "next": {
+                "path": "02.install.md",
+                "title": "安装"
+            },
+            "prev": {
+                "path": "/README.md",
+                "title": "鲁班微服务架构"
+            },
+            "title": "架构说明"
+        },
+        "02.install.md": {
+            "next": {
+                "path": "03.apps/README.md",
+                "title": "前端业务系统"
+            },
+            "prev": {
+                "path": "01.intro.md",
+                "title": "架构说明"
+            },
+            "title": "安装"
+        },
+        "README.md": {
+            "next": {
+                "path": "01.intro.md",
+                "title": "架构说明"
+            },
+            "prev": null,
+            "title": "鲁班微服务架构"
+        }
+    },
+    "nav": [
+        {
+            "path": "/README.md",
+            "title": "鲁班微服务架构"
+        }
+    ]
+}
