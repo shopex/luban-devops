@@ -3,7 +3,7 @@
         "01.intro.md": {
             "next": {
                 "path": "02.install.md",
-                "title": "安装"
+                "title": "快速开始"
             },
             "prev": {
                 "path": "/README.md",
@@ -20,7 +20,7 @@
                 "path": "01.intro.md",
                 "title": "架构说明"
             },
-            "title": "安装"
+            "title": "快速开始"
         },
         "README.md": {
             "next": {
