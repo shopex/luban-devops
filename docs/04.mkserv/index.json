@@ -1,12 +1,23 @@
 {
     "child": {
         "01.golang.md": {
-            "next": null,
+            "next": {
+                "path": "04.mkserv/02.java.md",
+                "title": "Java"
+            },
             "prev": {
                 "path": "04.mkserv/README.md",
                 "title": "编写服务"
             },
             "title": "Golang"
+        },
+        "02.java.md": {
+            "next": null,
+            "prev": {
+                "path": "04.mkserv/01.golang.md",
+                "title": "Golang"
+            },
+            "title": "Java"
         },
         "README.md": {
             "next": {
@@ -14,8 +25,8 @@
                 "title": "Golang"
             },
             "prev": {
-                "path": "03.apps/01.php.md",
-                "title": "php"
+                "path": "03.apps/02.java.md",
+                "title": "Java"
             },
             "title": "编写服务"
         }
