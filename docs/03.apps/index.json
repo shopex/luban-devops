@@ -2,25 +2,14 @@
     "child": {
         "01.php.md": {
             "next": {
-                "path": "03.apps/02.java.md",
-                "title": "Java"
+                "path": "04.mkserv/README.md",
+                "title": "编写服务"
             },
             "prev": {
                 "path": "03.apps/README.md",
                 "title": "前端业务系统"
             },
             "title": "php"
-        },
-        "02.java.md": {
-            "next": {
-                "path": "04.mkserv/README.md",
-                "title": "编写服务"
-            },
-            "prev": {
-                "path": "03.apps/01.php.md",
-                "title": "php"
-            },
-            "title": "Java"
         },
         "README.md": {
             "next": {
