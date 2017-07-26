@@ -8,6 +8,19 @@ use Shopex\Luban\Luban;
 class open extends Controller
 {
 
+    function __construct(){
+        $this->middleware(function ($request, $next) {
+            if( Luban::has('apihub') == false ){
+                abort(404);
+            }
+
+            if( Luban::available('apihub') == false){
+                return response(view('open/closed'));
+            }
+            return $next($request);
+        });
+    }
+
     public function api_list(){
     	$pkgs = Luban::s('apihub')->package_list([]);
 		$apis = Luban::s('apihub')->api_list([]);
@@ -36,7 +49,7 @@ class open extends Controller
     			$title = $req->input('default_api_title'); 
     		}
 
-			$param = [];
+			$params = [];
 
     		$param_key = $req->input('param_key');
     		$param_desc =  $req->input('param_desc');
@@ -44,7 +57,7 @@ class open extends Controller
     		$param_value =  $req->input('param_value');
     		$param_required =  $req->input('param_required');
     		$param_hidden =  $req->input('param_hidden');
-    		foreach($param_key as $i => $key){
+    		foreach((array)$param_key as $i => $key){
     			$params[$i] = [
     				'key'=>$param_key[$i],
     				'desc'=>$param_desc[$i],

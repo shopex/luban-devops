@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Shopex\Luban\Luban;
 use Shopex\Luban\BackendException;
+use Hprose\Future;
 
 class service extends Controller
 {
@@ -14,15 +15,31 @@ class service extends Controller
 
 	public function json()
 	{
-		$docs = [];
-		foreach (Luban::services() as $srv) {
+		$srvs = Luban::services();
+
+		// $t1 = time();
+		// Luban::s('apihub')->doc();
+		// var_dump(time() - $t1);exit;
+
+		$rst = Future\value($srvs)->map(function($srv){
 			try{
-				$srv_obj = Luban::s($srv);
-				$docs[$srv] = $srv_obj->doc();
+				return Luban::s($srv)->setTimeout(1000)->doc();
+			}catch(BackendException $e){
+				return false;
 			}catch(\Exception $e){
-				$docs[$srv] = false;
+				return ["error"=>$e->getMessage()];
 			}
+		});
+
+		$result = [];
+		$rst->then(function($r) use (&$result){
+			$result = $r;
+		});
+
+		foreach($srvs as $i => $k){
+			$docs[$k] = $result[$i];
 		}
+
 		return $docs;
 	}
 

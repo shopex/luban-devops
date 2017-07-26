@@ -19,6 +19,13 @@ h1{
 .search-opts a:hover{background: $component-active-bg; color:$component-active-color;}
 .search-panel-footer{border-top:1px solid #ccc; margin:0 10px; padding:10px 0 5px 0; text-align: right}
 
+.api-header-error{
+	color:#999;
+	position: absolute; 
+	left:200px;
+	font-size:70%;
+	line-height: 2em;
+}
 
 .srv-api{
 

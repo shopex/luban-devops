@@ -4,18 +4,19 @@
 
 @section('content')
 
-<div id="srv-console" style="display:none">
+<div id="srv-console" style="display:none;position: relative;">
 	<h3>接口总数 @{{ total_apis }}</h3><hr />	
 	<div class="srv" v-for="(item, service) in service_list">
 		<div class="srv-header" onclick="$('.srv-body',$(this).parent()).slideToggle(180)">
-			<span v-if="item" class="p-online"></span>
+			<span v-if="item && item.apis" class="p-online"></span>
 			<span v-else class="p-offline"></span>
 			<span>@{{ service }}</span>
-			<span v-if="item" style="float:right">
+			<span v-if="item.error" class="api-header-error">@{{ item.error }}</span>			
+			<span v-if="item && item.apis" style="float:right">
 				<span v-if="item.apis" class="badge" >@{{ item.apis.length }}</span>
 			</span>
 		</div>
-		<div v-if="item" class="srv-body" style="display: none">
+		<div v-if="item && item.apis" class="srv-body" style="display: none">
 			<div class="srv-api" v-for="(api, i) in item.apis">
 				<div class="srv-api-header" onclick="$('.api-body',$(this).parent()).slideToggle(180)">
 					<div class="api-title">@{{ api.title }}</div>

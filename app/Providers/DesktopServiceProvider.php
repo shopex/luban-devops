@@ -2,6 +2,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Shopex\Luban\Luban;
 
 class DesktopServiceProvider extends ServiceProvider
 {
@@ -12,15 +13,17 @@ class DesktopServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->share('app_menus', [
+        $menus = [
                 ['label'=>'首页', 'link'=>'home'],            
-        		['label'=>'微服务', 'link'=>'service'],
+                ['label'=>'微服务', 'link'=>'service'],
                 ['label'=>'集群', 'link'=>'nodes'],
                 ['label'=>'消息队列', 'link'=>'queue'],                
-                // ['label'=>'日志与监控', 'link'=>'log'],
-                ['label'=>'开放接口', 'link'=>'open'],
-                // ['label'=>'使用手册', 'link'=>'doc'],
-        	]);
+            ];
+        if(Luban::has('apihub')){
+            $menus[] = ['label'=>'开放接口', 'link'=>'open'];
+        }
+
+        view()->share('app_menus', $menus);
     }
 
     /**
