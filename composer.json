@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "shopex/luban-laravel",
+    "description": "The Laravel Framework of shopex luban project.",
+    "keywords": ["framework", "laravel", "shopex"],
     "license": "MIT",
     "type": "project",
     "require": {
