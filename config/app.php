@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Admin'),
 
     /*
     |--------------------------------------------------------------------------
@@ -185,8 +185,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Shopex\Luban\LubanServiceProvider::class,
-        
+        App\Providers\DesktopServiceProvider::class,        
+        Shopex\Luban\LubanServiceProvider::class,        
+        Shopex\AdminUI\AdminUIServiceProvider::class,
+
     ],
 
     /*

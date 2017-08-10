@@ -12,6 +12,7 @@ class DesktopServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        view()->share("app_name", config('app.name','Admin'));
         view()->share('app_menus', [
         		['label'=>'首页', 'link'=>'home'],
         		['label'=> '菜单组一', 'items'=>[
