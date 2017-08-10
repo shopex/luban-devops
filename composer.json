@@ -1,6 +1,6 @@
 {
-    "name": "shopex/luban-laravel",
-    "description": "The Laravel Framework of shopex luban project.",
+    "name": "shopex/luban-desktop",
+    "description": "The Laravel Framework of shopex luban desktop project.",
     "keywords": ["framework", "laravel", "shopex"],
     "license": "MIT",
     "type": "project",
