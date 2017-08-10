@@ -55,6 +55,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Shopex Luban
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'etcd_addr' => env('ETCD_ADDR'),    
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
@@ -176,7 +185,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Shopex\Luban\LubanServiceProvider::class,
+        
     ],
 
     /*
@@ -225,6 +235,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Luban' => Shopex\Luban\LubanFacade::class,
 
     ],
 
