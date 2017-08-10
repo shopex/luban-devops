@@ -17,10 +17,6 @@ class service extends Controller
 	{
 		$srvs = Luban::services();
 
-		// $t1 = time();
-		// Luban::s('apihub')->doc();
-		// var_dump(time() - $t1);exit;
-
 		$rst = Future\value($srvs)->map(function($srv){
 			try{
 				return Luban::s($srv)->setTimeout(1000)->doc();
