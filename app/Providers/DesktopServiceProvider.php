@@ -13,6 +13,7 @@ class DesktopServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->share("app_name", config('app.name','Admin'));
+        
         view()->share('app_menus', [
         		['label'=>'首页', 'link'=>'home'],
         		['label'=> '菜单组一', 'items'=>[
@@ -36,6 +37,12 @@ class DesktopServiceProvider extends ServiceProvider
         		]],
         		['label'=> '菜单三', 'link'=>'/' ],
         	]);
+
+        view()->share('searchbar', [
+                ['label'=>'搜索用户', 'action'=>'/search/user', 'regexp'=>'[a-z0-9\.\_\+\-]'],
+                ['label'=>'搜索手机号', 'action'=>'/search/phone', 'regexp'=>'^[0-9\s]+$'],
+                ['label'=>'搜索邮箱', 'action'=>'/search/email', 'regexp'=>'^[a-z0-9\.\_\+\-]+@[a-z0-9\.\_\-]+$'],
+            ]);
     }
 
     /**
