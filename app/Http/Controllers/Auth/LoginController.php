@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Shopex\AdminUI\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -37,3 +37,8 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 }
+
+
+// $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
+// $this->post('login', 'Auth\LoginController@login');
+// $this->post('logout', 'Auth\LoginController@logout')->name('logout');
