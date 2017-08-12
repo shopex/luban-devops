@@ -59,3 +59,4 @@ $(function(){
 })
 
 window.Vue = require('vue');
+require('../vendor/adminui/js/ui');

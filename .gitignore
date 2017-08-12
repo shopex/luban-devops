@@ -13,6 +13,7 @@ yarn-error.log
 composer.lock
 -------------------
 /resources/views/vendor
+/resources/assets/vendor
 /public/fonts/
 /public/mix-manifest.json
 /public/css

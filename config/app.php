@@ -187,7 +187,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\DesktopServiceProvider::class,        
         Shopex\Luban\LubanServiceProvider::class,        
-        Shopex\AdminUI\AdminUIServiceProvider::class,
+        Shopex\AdminUI\Providers\AdminUIServiceProvider::class,
 
     ],
 
@@ -238,7 +238,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Luban' => Shopex\Luban\LubanFacade::class,
-
+        'Admin' =>  Shopex\AdminUI\Facades\AdminUIFacade::class,
     ],
 
 ];

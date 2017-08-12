@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Shopex\AdminUI\AuthenticatesUsers;
+use Shopex\AdminUI\Http\Traits\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
