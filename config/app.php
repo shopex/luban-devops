@@ -188,7 +188,7 @@ return [
         App\Providers\DesktopServiceProvider::class,        
         Shopex\Luban\LubanServiceProvider::class,        
         Shopex\AdminUI\Providers\AdminUIServiceProvider::class,
-
+        Laravoole\LaravooleServiceProvider::class,
     ],
 
     /*
