@@ -13,6 +13,8 @@ class DesktopServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        view()->share("app_name", config('app.name','Devops'));
+        
         $menus = [
                 ['label'=>'首页', 'link'=>'home'],            
                 ['label'=>'微服务', 'link'=>'service'],

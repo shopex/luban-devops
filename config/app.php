@@ -1,4 +1,5 @@
 <?php
+
 return [
 
     /*
@@ -11,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Admin'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,6 +52,15 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Shopex Luban
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'etcd_addr' => env('ETCD_ADDR'),    
 
     /*
     |--------------------------------------------------------------------------
@@ -120,8 +130,9 @@ return [
     */
 
     'log' => env('APP_LOG', 'single'),
+
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
-    'etcd_addr' => env('ETCD_ADDR'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -174,9 +185,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\DesktopServiceProvider::class,
-
-        Shopex\Luban\LubanServiceProvider::class,
+        App\Providers\DesktopServiceProvider::class,        
+        Shopex\Luban\LubanServiceProvider::class,        
+        Shopex\AdminUI\Providers\AdminUIServiceProvider::class,
 
     ],
 
@@ -227,6 +238,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Luban' => Shopex\Luban\LubanFacade::class,
-
+        'Admin' =>  Shopex\AdminUI\Facades\AdminUIFacade::class,
     ],
+
 ];

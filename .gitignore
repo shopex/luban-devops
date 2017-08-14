@@ -8,6 +8,14 @@
 Homestead.json
 Homestead.yaml
 npm-debug.log
+yarn-error.log
 .env
-public/t.php
 .DS_Store
+composer.lock
+-------------------
+/resources/views/vendor
+/resources/assets/vendor
+/public/fonts/
+/public/mix-manifest.json
+/public/css
+/public/js

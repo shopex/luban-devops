@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('adminui::layout')
 
 @section('title', '查看ITEM列表')
 

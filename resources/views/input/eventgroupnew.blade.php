@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('adminui::layout')
 
 @section('title', '新建标签组')
 
