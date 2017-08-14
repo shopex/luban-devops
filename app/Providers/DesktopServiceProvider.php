@@ -15,8 +15,9 @@ class DesktopServiceProvider extends ServiceProvider
         view()->share("app_name", config('app.name','Admin'));
         
         view()->share('app_menus', [
-        		['label'=>'首页', 'link'=>'home'],
-        		['label'=> '菜单组一', 'items'=>[
+        		['label'=>'了解系统', 'guest-only'=>t, 'link'=>'/'],
+                ['label'=>'首页', 'link'=>'/home', 'user-only'=>true],
+        		['label'=> '菜单组一', 'user-only'=>t, 'items'=>[
 	        		['label'=>'菜单', 'link'=>'/', 'icon'=>'glyphicon-search'],
                     ['label'=>'菜单', 'link'=>'/'],
                     [],
@@ -26,7 +27,7 @@ class DesktopServiceProvider extends ServiceProvider
         			['label'=>'菜单', 'link'=>'/'],
                     ['label'=>'菜单', 'link'=>'/'],
         		]],
-        		['label'=> '菜单组二', 'items'=>[
+        		['label'=> '菜单组二', 'user-only'=>t, 'items'=>[
 					['label'=>'菜单', 'link'=>'/'],
 					[],
         			['label'=>'菜单', 'link'=>'/'],
@@ -35,7 +36,8 @@ class DesktopServiceProvider extends ServiceProvider
         			['label'=>'菜单', 'link'=>'/'],
         			['label'=>'菜单', 'link'=>'/'],
         		]],
-        		['label'=> '菜单三', 'link'=>'/' ],
+        		['label'=> '菜单三', 'user-only'=>t, 'link'=>'/' ],
+                ['label'=>'文档', 'link'=>'/'],
         	]);
 
         view()->share('searchbar', [
