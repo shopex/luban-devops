@@ -61,6 +61,7 @@ return [
     */
 
     'etcd_addr' => env('ETCD_ADDR'),    
+    'etcd_config_path' => env('ETCD_CONFIG_PATH'), 
 
     /*
     |--------------------------------------------------------------------------
@@ -186,7 +187,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\DesktopServiceProvider::class,        
-        Shopex\Luban\LubanServiceProvider::class,        
+        Shopex\Luban\Providers\LubanProvider::class,
         Shopex\AdminUI\Providers\AdminUIServiceProvider::class,
 
     ],
@@ -237,7 +238,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Luban' => Shopex\Luban\LubanFacade::class,
+        'Luban' => Shopex\Luban\Facades\LubanFacade::class,
         'Admin' =>  Shopex\AdminUI\Facades\AdminUIFacade::class,
     ],
 

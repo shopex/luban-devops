@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Shopex\AdminUI\Http\Traits\AuthenticatesUsers;
+use Shopex\Luban\Facades\LubanFacade as Luban;
 
 class LoginController extends Controller
 {
@@ -21,9 +22,9 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     protected $redirectTo = '/home';
-    protected $app_id = 'asdfaf';
-    protected $app_secret = 'asdfasfa';
-    protected $sso_url = 'http://127.0.0.1:8010/';
+    protected $sso_app_id;
+    protected $sso_app_secret;
+    protected $sso_url;
 
     /**
      * Create a new controller instance.
@@ -32,6 +33,10 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        $this->sso_app_id = Luban::config()->get("sso_app_id");
+        $this->sso_app_secret = Luban::config()->get("sso_app_secret");
+        $this->sso_url = Luban::config()->get("sso_url");
+
         $this->middleware('guest')->except('logout');
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Shopex\Luban\Luban;
-use Shopex\Luban\BackendException;
+use Shopex\Luban\Facades\LubanFacade as Luban;
+use Shopex\Luban\Exceptions\BackendException;
 use Hprose\Future;
 
 class service extends Controller

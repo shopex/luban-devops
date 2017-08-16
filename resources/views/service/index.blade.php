@@ -56,7 +56,7 @@
 						<div v-show="api.response">
 							PHP:
 <div class="code">
-	use Shopex\Luban\Luban;
+	use Shopex\Luban\Facades\LubanFacade as Luban;
 
 	$result = Luban::s('@{{ service }}')->@{{ api.name }}(array(
 		<span v-for="(param, j) in api.parameters">'@{{ param.name }}'=> '@{{param.value}}',</span>

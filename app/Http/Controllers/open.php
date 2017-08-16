@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Shopex\Luban\Luban;
+use Shopex\Luban\Facades\LubanFacade as Luban;
 
 class open extends Controller
 {
