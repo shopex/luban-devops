@@ -12,7 +12,6 @@
 */
 
 Auth::routes();
-Route::any('/go', 'Auth\LoginController@logout');
 Route::get('/home', 'dashboard@welcome');
 
 Route::get('/input/event', 'input@event');
