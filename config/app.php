@@ -189,7 +189,7 @@ return [
         App\Providers\DesktopServiceProvider::class,        
         Collective\Html\HtmlServiceProvider::class,
         Shopex\Luban\Providers\LubanProvider::class,
-        Shopex\LubanAdmin\LubanAdminServiceProvider::class,
+        Shopex\LubanAdmin\Providers\LubanAdminProvider::class,
 
     ],
 
