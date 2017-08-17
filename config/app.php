@@ -241,7 +241,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,      
-        'Luban' => Shopex\Luban\Facades\LubanFacade::class,
+        'Luban' => Shopex\Luban\Facades\Luban::class,
+        'Admin' => Shopex\LubanAdmin\Facades\Admin::class,
+
     ],
 
 ];
