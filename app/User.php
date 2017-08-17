@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Shopex\LubanAdmin\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -29,4 +30,5 @@ class User extends Authenticatable
     public function getAuthIdentifierName(){
         return 'sso_user_id';
     }
+
 }

@@ -187,8 +187,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\DesktopServiceProvider::class,        
+        Collective\Html\HtmlServiceProvider::class,
         Shopex\Luban\Providers\LubanProvider::class,
-        Shopex\AdminUI\Providers\AdminUIServiceProvider::class,
+        Shopex\LubanAdmin\Providers\LubanAdminProvider::class,
 
     ],
 
@@ -238,8 +239,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Luban' => Shopex\Luban\Facades\LubanFacade::class,
-        'Admin' =>  Shopex\AdminUI\Facades\AdminUIFacade::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,      
+        'Luban' => Shopex\Luban\Facades\Luban::class,
+        'Admin' => Shopex\LubanAdmin\Facades\Admin::class,
+
     ],
 
 ];

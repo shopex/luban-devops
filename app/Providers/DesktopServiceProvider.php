@@ -2,7 +2,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Shopex\Luban\Facades\LubanFacade as Luban;
+use Shopex\Luban\Facades\Luban;
 
 class DesktopServiceProvider extends ServiceProvider
 {
@@ -37,4 +37,5 @@ class DesktopServiceProvider extends ServiceProvider
     {
         //
     }
+    
 }

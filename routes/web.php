@@ -11,7 +11,6 @@
 |
 */
 
-Auth::routes();
 Route::get('/home', 'dashboard@welcome');
 
 Route::get('/input/event', 'input@event');
@@ -60,3 +59,7 @@ Route::any('/open/key/delete/{id}', 'open@key_delete');
 Route::get('/', function(){
 	return redirect(url('/home'));
 });
+
+Admin::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
