@@ -11,6 +11,7 @@ npm-debug.log
 yarn-error.log
 .env
 composer.lock
+.DS_Store
 -------------------
 /resources/views/vendor
 /resources/assets/vendor
@@ -18,3 +19,19 @@ composer.lock
 /public/mix-manifest.json
 /public/css
 /public/js
+
+app/HasRoles.php
+app/LoginSession.php
+app/Permission.php
+app/Role.php
+app/Http/Controllers/Admin/
+app/Http/Middleware/CheckRole.php
+database/migrations/2016_01_01_193651_create_roles_permissions_tables.php
+database/migrations/2017_08_14_120030_create_login_sessions_table.php
+resources/assets/js/components/searchbar.vue
+resources/assets/js/ui.js
+resources/crud-generator/
+resources/laravel-admin/
+resources/views/admin/
+resources/views/layout.blade.php
+resources/views/layouts/

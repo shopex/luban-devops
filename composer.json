@@ -6,11 +6,11 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "garveen/laravoole": "^0.5.1",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "shopex/luban" : "dev-master",
-        "shopex/adminui" : "dev-master",
-        "garveen/laravoole": "^0.5.1"
+        "shopex/luban": "dev-master",
+        "shopex/luban-admin": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
