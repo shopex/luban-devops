@@ -20,10 +20,12 @@ composer.lock
 /public/css
 /public/js
 
+app/User.php
 app/HasRoles.php
 app/LoginSession.php
 app/Permission.php
 app/Role.php
+app/Http/Controllers/Auth/
 app/Http/Controllers/Admin/
 app/Http/Middleware/CheckRole.php
 database/migrations/2016_01_01_193651_create_roles_permissions_tables.php
