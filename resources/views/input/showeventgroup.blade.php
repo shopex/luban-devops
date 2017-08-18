@@ -1,4 +1,4 @@
-@extends('adminui::layout')
+@extends('admin::layout')
 
 @section('title', '查看标签明细信息')
 

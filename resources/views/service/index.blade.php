@@ -1,4 +1,4 @@
-@extends('adminui::layout')
+@extends('admin::layout')
 
 @section('title', '微服务')
 
@@ -56,7 +56,7 @@
 						<div v-show="api.response">
 							PHP:
 <div class="code">
-	use Shopex\Luban\Facades\LubanFacade as Luban;
+	use Shopex\Luban\Facades\Luban;
 
 	$result = Luban::s('@{{ service }}')->@{{ api.name }}(array(
 		<span v-for="(param, j) in api.parameters">'@{{ param.name }}'=> '@{{param.value}}',</span>

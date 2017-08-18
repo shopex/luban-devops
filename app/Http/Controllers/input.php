@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Shopex\Luban\Facades\LubanFacade as Luban;
+use Shopex\Luban\Facades\Luban;
 
 class input extends Controller
 {

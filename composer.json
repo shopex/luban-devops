@@ -9,8 +9,8 @@
         "garveen/laravoole": "^0.5.1",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "shopex/luban": "dev-master",
-        "shopex/luban-admin": "dev-master"
+        "shopex/luban": "^0.8.2",
+        "shopex/luban-admin": "^v1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

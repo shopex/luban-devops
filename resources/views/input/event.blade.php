@@ -1,4 +1,4 @@
- @extends('adminui::layout')
+ @extends('admin::layout')
 
 @section('title', 'Page Title')
 
