@@ -1,11 +1,11 @@
 @extends('admin::layout')
 
+@section('title', 'Edit User')
+
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin::sidebar')
-
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Edit User</div>
                     <div class="panel-body">
@@ -27,7 +27,7 @@
                             'class' => 'form-horizontal'
                         ]) !!}
 
-                        @include ('admin.users.form', ['submitButtonText' => 'Update'])
+                        @include ('admin::users.form', ['submitButtonText' => 'Update'])
 
                         {!! Form::close() !!}
 

@@ -3,6 +3,7 @@
 @section('title', '开放接口')
 
 @section('content')
+<div class="container">
 <ol class="breadcrumb">
   <li><a href="{{ url('open/') }}">开放接口</a></li>
   <li><a href="{{ url('open/key/') }}">管理Key</a></li>
@@ -43,6 +44,7 @@
     </dl>
 
 	</div>
+</div>
 </div>
 </div>
 @endsection

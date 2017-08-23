@@ -3,6 +3,7 @@
 @section('title', '开放接口')
 
 @section('content')
+<div class="container">
 <ol class="breadcrumb">
   <li><a href="{{ url('open/') }}">开放接口</a></li>
   <li class="active">新建接口</li>
@@ -140,6 +141,7 @@
 <button type="submit" class="btn btn-default">创建新接口</button>
 
 </form>
+</div>
 
 <script>
 $(function(){

@@ -1,1 +1,0 @@
-Vue.component('searchbar', require('./components/searchbar'));

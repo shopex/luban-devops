@@ -1,11 +1,11 @@
 @extends('admin::layout')
 
+@section('title', 'Edit Role')
+
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin::sidebar')
-
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Edit Role</div>
                     <div class="panel-body">
@@ -27,7 +27,7 @@
                             'class' => 'form-horizontal'
                         ]) !!}
 
-                        @include ('admin.roles.form', ['submitButtonText' => 'Update'])
+                        @include ('admin::roles.form', ['submitButtonText' => 'Update'])
 
                         {!! Form::close() !!}
 

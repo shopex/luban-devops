@@ -2,57 +2,52 @@
 
 @section('title', '开放接口')
 
-@section('content')
-<style>
-.api-top-title{background: #000;color:#fff;}
-.api-sub-title{background: #f0f0f0;color:#000;}
-</style>
+@section('header')
+<div class="finder-header">
+	<div class="row api-top-title">
+		<div class="col-md-2">API Code</div>
+		<div class="col-md-2">名称</div>
+		<div class="col-md-2">已启用</div>
+		<div class="col-md-2">API类型</div>
+		<div class="col-md-2">后端地址</div>
+	</div>
+</div>
+@endsection
 
-<h3>开放接口</h3>
+@section('action-bar')
 	<a class="btn btn-default" href="open/api/new">添加新接口</a>
 	<a class="btn btn-default" href="{{ url('/open/pkg/') }}">管理接口包</a>
 	<a class="btn btn-default" href="/open/key/">管理Key</a>
+@endsection
 
-<hr />
-
-<table class="table">
-<thead>
-	<tr class="api-top-title">
-		<td width="20%">API Code</td>
-		<td>名称</td>
-		<td width="150px">已启用</td>
-		<td width="150px">API类型</td>
-		<td width="35%">后端地址</td>
-	</tr>
-</thead>
-<tbody>
+@section('content')
+<div class="finder-body">
 @foreach ($pkgs as $pkg)
-	<tr class="api-sub-title">
-		<td colspan="2">{{$pkg->code}} {{$pkg->name}}</td>
-		<td colspan="3">
+	<div class="finder-group-title row">
+		<div class="col-md-4">{{$pkg->code}} {{$pkg->name}}</div>
+		<div class="col-md-8">
 		@if($pkg->enabled)
 		true
 		@else
 		false
 		@endif
-		</td>
-	</tr>
+		</div>
+	</div>
 	@foreach ($pkg->apis as $api)
-	<tr>
-		<td style="padding-left:40px"><a href="{{ url('/open/api/show') }}/{{$api->id}}">{{$pkg->code}}.{{$api->code}}</a></td>
-		<td>{{$api->title}}</td>
-		<td>
+	<div class="row">
+		<div class="col-md-2" style="padding-left:40px"><a href="{{ url('/open/api/show') }}/{{$api->id}}">{{$pkg->code}}.{{$api->code}}</a></div>
+		<div class="col-md-2">{{$api->title}}</div>
+		<div class="col-md-2">
 		@if($api->enabled)
 		true
 		@else
 		false
 		@endif
-		</td>
-		<td>hprose</td>
-		<td>{{$api->backend}}:{{$api->backendMethod}}</td>
-	</tr>
+		</div>
+		<div class="col-md-2">hprose</div>
+		<div class="col-md-2">{{$api->backend}}:{{$api->backendMethod}}</div>
+	</div>
 	@endforeach
 @endforeach	
-</tbody>
-</table>
+</div>
 @endsection

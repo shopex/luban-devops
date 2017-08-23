@@ -3,44 +3,47 @@
 @section('title', '集群')
 
 @section('content')
-<h3>集群</h3><hr />
+<div class="container">
+	<h3>集群</h3><hr />
 
-<div class="row">
-@foreach ($nodes as $node=>$items)
-	<div class="col-md-3">
-		<div class="panel panel-default">
-		  <div class="panel-heading">{{ $node }}</div>
-		  <div class="panel-body">
-		    @foreach ($items as $item)
-	    		<div style="padding:3px">
-		    		<b>{{ $item }}</b>
-	    		</div>
-		    @endforeach
-		  </div>
+	<div class="row">
+	@foreach ($nodes as $node=>$items)
+		<div class="col-md-3">
+			<div class="panel panel-default">
+			  <div class="panel-heading">{{ $node }}</div>
+			  <div class="panel-body">
+			    @foreach ($items as $item)
+		    		<div style="padding:3px">
+			    		<b>{{ $item }}</b>
+		    		</div>
+			    @endforeach
+			  </div>
+			</div>
 		</div>
+	@endforeach
 	</div>
-@endforeach
-</div>
 
 
-<h3>参数配置</h3><hr />
+	<h3>参数配置</h3><hr />
 
-<div class="row" style="margin-bottom:50px">
-@foreach ($services as $item)
-		<div class="col-md-1">
-			<a href="{{ url('/service/cfg') }}/{{ $item }}">		
-				<b>{{ $item }}</b>
-			</a>
-		</div>
-@endforeach
+	<div class="row" style="margin-bottom:50px">
+	@foreach ($services as $item)
+			<div class="col-md-1">
+				<a href="{{ url('/service/cfg') }}/{{ $item }}">		
+					<b>{{ $item }}</b>
+				</a>
+			</div>
+	@endforeach
 
-		<div class="col-md-1" id="new-cfg">
-			<a href="#"><i class="glyphicon glyphicon-plus"></i></a>
-			<form class="new-cfg-panel external" style="white-space: nowrap;display: none">
-				<input type="text" id="new-cfg-ipt" />
-				<button type="submit" class="btn btn-sm btn-default">创建配置</button>
-			</form>
-		</div>
+			<div class="col-md-1" id="new-cfg">
+				<a href="#"><i class="glyphicon glyphicon-plus"></i></a>
+				<form class="new-cfg-panel external" style="white-space: nowrap;display: none">
+					<input type="text" id="new-cfg-ipt" />
+					<button type="submit" class="btn btn-sm btn-default">创建配置</button>
+				</form>
+			</div>
+
+	</div>
 
 </div>
 

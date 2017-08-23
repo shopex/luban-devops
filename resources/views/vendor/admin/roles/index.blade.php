@@ -1,11 +1,11 @@
 @extends('admin::layout')
 
+@section('title', 'Roles')
+
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
-
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Roles</div>
                     <div class="panel-body">
@@ -18,7 +18,7 @@
                             <input type="text" class="form-control" name="search" placeholder="Search...">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit">
-                                    <i class="fa fa-search"></i>
+                                    <i class="glyphicon glyphicon-search"></i>
                                 </button>
                             </span>
                         </div>

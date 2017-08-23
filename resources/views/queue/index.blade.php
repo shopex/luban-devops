@@ -2,12 +2,13 @@
 
 @section('title', '消息队列')
 
+
+@section('action-bar')
+	<a href="{{url('/input/event')}}"><button class="btn btn-default">事件列表</button></a>
+@endsection
+
 @section('content')
-<h3>消息队列</h3><hr />
- <a href="{{url('/input/event')}}"><button class="btn btn-default">事件列表</button></a>
- <hr/>
-
-
+<div class="container">
 @foreach ($groups as $group)
 <div class="panel panel-default">
 	<div class="panel-heading">消息组</div>
@@ -120,5 +121,6 @@
 	</form>
 
 	</div>
+</div>
 </div>
 @endsection
