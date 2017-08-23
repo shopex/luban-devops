@@ -48,16 +48,12 @@ class HomeController extends Controller
     					])
 
     				->addSearch('姓名', 'name', 'string')
-    				->addSearch('姓名', 'name', 'number')
-    				->addSearch('姓名', 'name')
-    				->addSearch('姓名', 'name', 'date')
-    				->addSearch('姓名', 'name', 'string')
-    				->addSearch('姓名', 'name', 'number')
+    				->addSearch('邮箱', 'email', 'string')
 
     				->addInfoPanel('基本信息', [$this, 'info_basic'])
     				->addInfoPanel('家庭地址', [$this, 'info_address']);
 
-        return $finder->view('xxxx');
+        return $finder->view();
     }
 
     // function 
