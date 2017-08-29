@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,7 +71,7 @@
 
 
 var bind = __webpack_require__(3);
-var isBuffer = __webpack_require__(17);
+var isBuffer = __webpack_require__(18);
 
 /*global toString:true*/
 
@@ -381,7 +381,7 @@ module.exports = {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(20);
+var normalizeHeaderName = __webpack_require__(21);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -471,88 +471,33 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
+var g;
 
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
 
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
 }
 
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
 
-	return '/*# ' + data + ' */';
-}
+module.exports = g;
 
 
 /***/ }),
@@ -581,12 +526,12 @@ module.exports = function bind(fn, thisArg) {
 
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(21);
-var buildURL = __webpack_require__(23);
-var parseHeaders = __webpack_require__(24);
-var isURLSameOrigin = __webpack_require__(25);
+var settle = __webpack_require__(22);
+var buildURL = __webpack_require__(24);
+var parseHeaders = __webpack_require__(25);
+var isURLSameOrigin = __webpack_require__(26);
 var createError = __webpack_require__(5);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(26);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(27);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -683,7 +628,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(27);
+      var cookies = __webpack_require__(28);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -767,7 +712,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(22);
+var enhanceError = __webpack_require__(23);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -825,14 +770,149 @@ module.exports = Cancel;
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports) {
+
+$.loadPage = function(url, options, skip_state){
+    var that = this;
+
+    if(that.prevRequest){
+      that.prevRequest.abort();
+    }
+    that.prevRequest = $.ajax(url, $.extend(options, {
+      headers: {'X-Airload': 'true'},
+      success:function(rsp, status, request){
+        if( typeof(rsp) == "string" ){
+            if(!skip_state){
+              window.history.pushState(null , "" ,url);
+            }
+          var el = document.createElement('div');
+          el.innerHTML = rsp;
+          if($('title', el)){
+            document.title = $('title', el).html();
+          }
+
+          for(var i in that.slot){
+            var replaceBy = $(that.slot[i], el);
+            if(replaceBy.length>0){
+              $(that.slot[i]).replaceWith(replaceBy);
+            }else{
+              $(that.slot[i]).html('');
+            }
+          }
+
+          $('body').scrollTop(0)
+        }
+        that.success();
+      },
+      error:function(rsp){
+        if(rsp.readyState==4 && rsp.status==320){
+            options.method = 'GET';
+            options.data = undefined;
+            $.loadPage.call(that, rsp.getResponseHeader('location'), options, skip_state);
+            return;
+        }
+        that.error(rsp);
+      },
+      complete: function(){
+        that.prevRequest = null;        
+        that.complete();
+      }
+    }));
+    that.start();
+}
+
+$.pageReady = function(el){
+  var that = this;
+  $(el).bind('submit', function(e){
+    try{
+      var el = e.target;
+      if(el.tagName!='FORM'){
+        el = $(el).parents('form');
+        if(el.length==0){
+          return;
+        }
+      }
+      el = $(el);
+      if(!el.hasClass('external') && !el.attr('target')){
+        e.stopPropagation();
+        e.preventDefault();
+        var url = el.attr('action');
+        if(!url){
+          url = document.location.href;
+        }
+        $.loadPage.call(that, url, {
+          method: el.attr('method'),
+          data: el.serialize()
+        });
+      }
+    }catch(err){
+      e.stopPropagation();
+      if(console && console.error)console.error(err);
+      return false;
+    }
+  });
+
+  $(el).bind('click', function(e){
+    try{
+      var el = e.target;
+      if(el.tagName!='A'){
+        el = $(el).parents('a');
+        if(el.length==0){
+          return;
+        }
+      }
+      el = $(el);
+      var href = el.attr('href');      
+      if(!el.hasClass('external') && href!=undefined && !el.attr('target')){
+        if( href == '' ){
+          href = document.location.href;
+        }
+        if(href.substr(0,1)!='#' && !e.metaKey){
+          e.stopPropagation();
+          e.preventDefault();
+          $.loadPage.call(that, href);
+          return false;
+        }
+      }
+    }catch(err){
+      e.stopPropagation();
+      e.preventDefault();
+      if(console && console.error) console.error(err);
+      return false;
+    }
+  });
+}
+
+$.airloadSetup = function(el, cfg){
+  var context = $.extend({
+      requestIdx:0,
+      slot: ['.main-content'],
+      success: function(){},
+      start: function(){},
+      error: function(rsp){
+        if(rsp.responseText){
+          window.history.pushState(null , "" ,url);
+          document.body.innerHTML = rsp.responseText;
+        }
+      },
+      complete: function(){}
+    }, cfg);
+  $.pageReady.call(context, el);
+  window.onpopstate=function(s){
+    $.loadPage.call(context, document.location.href, {}, true);
+  }
+}
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(9);
+__webpack_require__(10);
 module.exports = __webpack_require__(47);
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -842,16 +922,67 @@ module.exports = __webpack_require__(47);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(10);
-window.Vue = __webpack_require__(35);
-__webpack_require__(36);
+__webpack_require__(11);
+__webpack_require__(8);
+
+window.Vue = __webpack_require__(36);
+
+$.showIndicator = function () {
+    $('#indicator').show();
+};
+
+$.hideIndicator = function () {
+    $('#indicator').hide();
+};
+
+$.toast = function (str) {
+    $('#toast span').html(str);
+    if (!$.toast_is_show) {
+        $.toast_is_show = true;
+        $('#toast').animate({ top: 0 });
+    } else {
+        clearTimeout($.toast_close_timer);
+    }
+
+    $.toast_close_timer = setTimeout(function () {
+        $.toast_is_show = false;
+        $('#toast').animate({ top: -50 });
+    }, 2500);
+};
+
+$(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.airloadSetup(window.document, {
+        slot: ['.main-content', '.main-script', 'meta[name="csrf-token"]'],
+        success: function success() {
+            $.showIndicator();
+        },
+        start: function start() {
+            $.showIndicator();
+            $('.dropdown-toggle[aria-expanded=true]').click();
+        },
+        error: function error() {
+            console.info('error');
+        },
+        complete: function complete() {
+            $.hideIndicator();
+        }
+    });
+});
+
+__webpack_require__(37);
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(11);
+window._ = __webpack_require__(12);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -860,9 +991,9 @@ window._ = __webpack_require__(11);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(13);
+  window.$ = window.jQuery = __webpack_require__(14);
 
-  __webpack_require__(14);
+  __webpack_require__(15);
 } catch (e) {}
 
 /**
@@ -871,7 +1002,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(15);
+window.axios = __webpack_require__(16);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -905,7 +1036,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -17994,10 +18125,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(12)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(13)(module)))
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -18025,7 +18156,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -28285,7 +28416,7 @@ return jQuery;
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 /*!
@@ -30668,13 +30799,13 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(16);
+module.exports = __webpack_require__(17);
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30682,7 +30813,7 @@ module.exports = __webpack_require__(16);
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(3);
-var Axios = __webpack_require__(18);
+var Axios = __webpack_require__(19);
 var defaults = __webpack_require__(1);
 
 /**
@@ -30717,14 +30848,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(7);
-axios.CancelToken = __webpack_require__(33);
+axios.CancelToken = __webpack_require__(34);
 axios.isCancel = __webpack_require__(6);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(34);
+axios.spread = __webpack_require__(35);
 
 module.exports = axios;
 
@@ -30733,7 +30864,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 /*!
@@ -30760,7 +30891,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30768,10 +30899,10 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(1);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(28);
-var dispatchRequest = __webpack_require__(29);
-var isAbsoluteURL = __webpack_require__(31);
-var combineURLs = __webpack_require__(32);
+var InterceptorManager = __webpack_require__(29);
+var dispatchRequest = __webpack_require__(30);
+var isAbsoluteURL = __webpack_require__(32);
+var combineURLs = __webpack_require__(33);
 
 /**
  * Create a new instance of Axios
@@ -30853,7 +30984,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -31043,7 +31174,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31062,7 +31193,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31095,7 +31226,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31123,7 +31254,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31198,7 +31329,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31242,7 +31373,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31317,7 +31448,7 @@ module.exports = (
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31360,7 +31491,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31420,7 +31551,7 @@ module.exports = (
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31479,14 +31610,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(30);
+var transformData = __webpack_require__(31);
 var isCancel = __webpack_require__(6);
 var defaults = __webpack_require__(1);
 
@@ -31565,7 +31696,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31592,7 +31723,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31613,7 +31744,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31634,7 +31765,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31698,7 +31829,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31732,7 +31863,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41827,195 +41958,11 @@ module.exports = Vue$3;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(37);
-
-$.showIndicator = function () {
-    $('#indicator').show();
-};
-
-$.hideIndicator = function () {
-    $('#indicator').hide();
-};
-
-$.toast = function (str) {
-    $('#toast span').html(str);
-    if (!$.toast_is_show) {
-        $.toast_is_show = true;
-        $('#toast').animate({ top: 0 });
-    } else {
-        clearTimeout($.toast_close_timer);
-    }
-
-    $.toast_close_timer = setTimeout(function () {
-        $.toast_is_show = false;
-        $('#toast').animate({ top: -50 });
-    }, 2500);
-};
-
-$(function () {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $.airloadSetup(window.document, {
-        slot: ['.main-content', '.main-script', 'meta[name="csrf-token"]'],
-        success: function success() {
-            $.showIndicator();
-        },
-        start: function start() {
-            $.showIndicator();
-            $('.dropdown-toggle[aria-expanded=true]').click();
-        },
-        error: function error() {
-            console.info('error');
-        },
-        complete: function complete() {
-            $.hideIndicator();
-        }
-    });
-});
-
 Vue.component('searchbar', __webpack_require__(38));
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports) {
-
-$.loadPage = function(url, options, skip_state){
-    var that = this;
-
-    if(that.prevRequest){
-      that.prevRequest.abort();
-    }
-    that.prevRequest = $.ajax(url, $.extend(options, {
-      headers: {'X-Airload': 'true'},
-      success:function(rsp, status, request){
-        if( typeof(rsp) == "string" ){
-            if(!skip_state){
-              window.history.pushState(null , "" ,url);
-            }
-          var el = document.createElement('div');
-          el.innerHTML = rsp;
-          if($('title', el)){
-            document.title = $('title', el).html();
-          }
-
-          for(var i in that.slot){
-            var replaceBy = $(that.slot[i], el);
-            if(replaceBy.length>0){
-              $(that.slot[i]).replaceWith(replaceBy);
-            }else{
-              $(that.slot[i]).html('');
-            }
-          }
-
-          $('body').scrollTop(0)
-        }
-        that.success();
-      },
-      error:function(rsp){
-        if(rsp.readyState==4 && rsp.status==320){
-            options.method = 'GET';
-            options.data = undefined;
-            $.loadPage.call(that, rsp.getResponseHeader('location'), options, skip_state);
-            return;
-        }
-        that.error(rsp);
-      },
-      complete: function(){
-        that.prevRequest = null;        
-        that.complete();
-      }
-    }));
-    that.start();
-}
-
-$.pageReady = function(el){
-  var that = this;
-  $(el).bind('submit', function(e){
-    try{
-      var el = e.target;
-      if(el.tagName!='FORM'){
-        el = $(el).parents('form');
-        if(el.length==0){
-          return;
-        }
-      }
-      el = $(el);
-      if(!el.hasClass('external') && !el.attr('target')){
-        e.stopPropagation();
-        e.preventDefault();
-        var url = el.attr('action');
-        if(!url){
-          url = document.location.href;
-        }
-        $.loadPage.call(that, url, {
-          method: el.attr('method'),
-          data: el.serialize()
-        });
-      }
-    }catch(err){
-      e.stopPropagation();
-      if(console && console.error)console.error(err);
-      return false;
-    }
-  });
-
-  $(el).bind('click', function(e){
-    try{
-      var el = e.target;
-      if(el.tagName!='A'){
-        el = $(el).parents('a');
-        if(el.length==0){
-          return;
-        }
-      }
-      el = $(el);
-      var href = el.attr('href');      
-      if(!el.hasClass('external') && href!=undefined && !el.attr('target')){
-        if( href == '' ){
-          href = document.location.href;
-        }
-        if(href.substr(0,1)!='#' && e.metaKey==false){        
-          e.stopPropagation();
-          e.preventDefault();
-          $.loadPage.call(that, href);
-          return false;
-        }
-      }
-    }catch(err){
-      e.stopPropagation();
-      e.preventDefault();
-      if(console && console.error) console.error(err);
-      return false;
-    }
-  });
-}
-
-$.airloadSetup = function(el, cfg){
-  var context = $.extend({
-      requestIdx:0,
-      slot: ['.main-content'],
-      success: function(){},
-      start: function(){},
-      error: function(rsp){
-        if(rsp.responseText){
-          window.history.pushState(null , "" ,url);
-          document.body.innerHTML = rsp.responseText;
-        }
-      },
-      complete: function(){}
-    }, cfg);
-  $.pageReady.call(context, el);
-  window.onpopstate=function(s){
-    $.loadPage.call(context, document.location.href, {}, true);
-  }
-}
+Vue.component('appsel', __webpack_require__(57));
 
 /***/ }),
 /* 38 */
@@ -42091,12 +42038,12 @@ if(false) {
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(undefined);
+exports = module.exports = __webpack_require__(62)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n.search-form{position: relative\n}\n.search-form .dropdown-menu{display:none;\n}\n.search-opts{min-height:190px;\n}\n.search-opts a{display: block;padding:5px 10px; text-decoration: none; color:#666;\n}\n.search-opts a:hover{background: $component-active-bg; color:$component-active-color;\n}\n.search-panel-footer{\n\tborder-top:1px solid #ccc; margin:0 10px; padding:10px 0 5px 0; text-align: right\n}\n", ""]);
+exports.push([module.i, "\n.search-form{position: relative\n}\n.search-form .dropdown-menu{display:none;\n}\n.search-opts{\n\tmin-height:20rem;\n\tmin-width:25rem;\n}\n.search-opts a{line-height:2rem; display: block;padding:0.5rem; text-decoration: none; color:#666;\n}\n.search-opts a:hover{background: $component-active-bg; color:$component-active-color;\n}\n.search-opts a.selected{\n\tbackground: #000;\n\tcolor: #fff;\n}\n.search-panel-footer{\n\tborder-top:1px solid #ccc; \n\tmargin:0 10px; \n\tpadding:10px 0 5px 0;\n\ttext-align: right;\n}\n.admin-header-searchbar input{\n\tline-height: 2.4rem;\n\tpadding:0 0.5rem;\n\tbackground: transparent;\n\tborder:1px solid #ccc;\n}\n.admin-header-searchbar > .dropdown{\n\tline-height: 2.4rem;\n\tmargin:1.3rem 0;\n}\n", ""]);
 
 // exports
 
@@ -42486,45 +42433,128 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ["items"],
 	data: function data() {
 		return {
-			"value": "",
-			"panel_width": '200px',
-			"show": false
+			value: "",
+			show: false,
+			selected: 0,
+			options_filter: [],
+			md: false
 		};
 	},
 
 	methods: {
-		focus: function focus() {},
+		display: function display() {
+			this.show = true;
+			this.md = false;
+			this.selected = 0;
+		},
 		blur: function blur() {
+			var that = this;
+			setTimeout(function () {
+				if (!that.md) {
+					that.show = false;
+				}
+			}, 50);
+		},
+		mouseDown: function mouseDown() {
+			this.md = true;
+		},
+		clear: function clear() {
+			this.md = false;
 			this.show = false;
+			this.value = '';
+			$('input', this.$el).blur();
+		},
+		keyup: function keyup(e) {
+			if (e.code == "ArrowUp") {
+				this.selected--;
+				if (this.selected == -1) {
+					this.selected = this.options_filter.length - 1;
+				}
+			} else if (e.code == "ArrowDown") {
+				this.selected++;
+				if (this.selected == this.options_filter.length) {
+					this.selected = 0;
+				}
+			} else if (e.code == "Enter") {
+				var event;
+
+				if (document.createEvent) {
+					event = document.createEvent("HTMLEvents");
+					event.initEvent("click", true, true);
+				} else {
+					event = document.createEventObject();
+					event.eventType = "click";
+				}
+
+				event.eventName = "click";
+
+				var element = $('a.selected', this.$el)[0];
+
+				if (document.createEvent) {
+					element.dispatchEvent(event);
+				} else {
+					element.fireEvent("on" + event.eventType, event);
+				}
+
+				this.clear();
+			} else {
+				if (!this.value) {
+					this.options_filter = [];
+				}
+				var ret = [];
+				for (var i = 0; i < this.items.length; i++) {
+					if (this.value.match(this.items[i].re)) {
+						this.items[i].href = this.items[i].action.replace('{{value}}', this.value);
+						ret.push(this.items[i]);
+					}
+				}
+				this.options_filter = ret;
+				this.selected = 0;
+			}
 		}
 	},
 	mounted: function mounted() {
-		var sb = $('.search-ipt', this.$el);
-		var panel = $('.search-panel', this.$el);
-		window._search_ipt_w = sb.width();
-		var that = this;
-		sb.on('focus', function () {
-			$('#navbar .hide-in-search').hide();
-			sb.select();
-			that.panel_width = $('.container').width() / 2 + 'px';
-			sb.animate({ width: $('.container').width() / 2 }, 300, function () {
-				panel.css('top', sb.outerHeight());
-				panel.width(sb.outerWidth());
-				that.show = true;
-			});
-		});
-		sb.on('blur', function () {
-			window._search_ipt_v = 0;
-			panel.hide();
-			sb.animate({ width: window._search_ipt_w }, 300, function () {
-				$('#navbar .hide-in-search').show();
-			});
-		});
+		$('.dropdown-toggle', this.$el).dropdown();
+		for (var i = 0; i < this.items.length; i++) {
+			this.items[i].re = new RegExp(this.items[i].regexp);
+		}
 	}
 });
 
@@ -42533,10 +42563,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('form', {
-    staticClass: "navbar-form navbar-right search-form"
+  return _c('div', {
+    staticClass: "admin-header-searchbar"
   }, [_c('div', {
-    staticClass: "form-group"
+    staticClass: "dropdown",
+    class: {
+      'open': (_vm.show && _vm.options_filter.length > 0)
+    }
   }, [_c('input', {
     directives: [{
       name: "model",
@@ -42544,7 +42577,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.value),
       expression: "value"
     }],
-    staticClass: "form-control search-ipt",
+    staticStyle: {
+      "width": "25rem"
+    },
     attrs: {
       "type": "text"
     },
@@ -42552,29 +42587,37 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.value)
     },
     on: {
-      "focus": _vm.focus,
+      "focus": _vm.display,
       "blur": _vm.blur,
+      "keyup": function($event) {
+        _vm.keyup($event)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.value = $event.target.value
       }
     }
-  }), _vm._v(" "), (_vm.show) ? _c('div', {
-    staticClass: "search-panel dropdown-menu",
-    staticStyle: {
-      "left": "15px",
-      "display": "block"
-    },
-    style: ({
-      'width': _vm.panel_width
-    })
-  }, [_c('div', {
-    staticClass: "search-opts"
-  }, _vm._l((_vm.items), function(item) {
-    return _c('a', [_vm._v("\n      \t\t" + _vm._s(item.label) + " "), _c('span', {
+  }), _vm._v(" "), _c('div', {
+    staticClass: "search-opts dropdown-menu"
+  }, _vm._l((_vm.options_filter), function(item, idx) {
+    return _c('a', {
+      class: {
+        'selected': _vm.selected == idx
+      },
+      attrs: {
+        "href": item.href
+      },
+      on: {
+        "click": _vm.clear,
+        "mousedown": _vm.mouseDown,
+        "mouseover": function($event) {
+          _vm.selected = idx
+        }
+      }
+    }, [_vm._v("\n\t      \t\t" + _vm._s(item.label) + " "), _c('span', {
       staticClass: "search-value-mapper"
     }, [_vm._v(_vm._s(_vm.value))])])
-  })), _vm._v(" "), _vm._t("default")], 2) : _vm._e()])])
+  }))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -42589,6 +42632,282 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(58)
+}
+var Component = __webpack_require__(44)(
+  /* script */
+  __webpack_require__(60),
+  /* template */
+  __webpack_require__(61),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Volumes/Main/Data/Sites/luban/devops/resources/assets/vendor/admin/js/components/appsel.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] appsel.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0428af25", Component.options)
+  } else {
+    hotAPI.reload("data-v-0428af25", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(59);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(42)("3247baa9", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../node_modules/_css-loader@0.28.4@css-loader/index.js!../../../../../../node_modules/_vue-loader@12.2.2@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0428af25\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/_vue-loader@12.2.2@vue-loader/lib/selector.js?type=styles&index=0!./appsel.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/_css-loader@0.28.4@css-loader/index.js!../../../../../../node_modules/_vue-loader@12.2.2@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0428af25\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/_vue-loader@12.2.2@vue-loader/lib/selector.js?type=styles&index=0!./appsel.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(62)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.app-sel{\n\twidth:22rem;\n\tmargin:0;\n\tpadding:1rem;\n}\n.app-sel li{\n\tfloat:left;\n\tmargin:0.5rem 0;\n}\n.app-sel li a{\n\ttext-align: center;\n\tdisplay: block;\n}\n.app-sel img{\n\twidth:3rem;\n\theight:3rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ["appinfo_url"],
+	data: function data() {
+		return {
+			'items': []
+		};
+	},
+	mounted: function mounted() {
+		var that = this;
+		$.ajax({
+			url: this.appinfo_url
+		}).done(function (rsp) {
+			that.items = rsp;
+		});
+	}
+});
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticClass: "dropdown"
+  }, [_vm._m(0), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu dropdown-menu-right app-sel"
+  }, _vm._l((_vm.items), function(item) {
+    return _c('li', [_c('a', {
+      attrs: {
+        "href": item.url
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": item.icon,
+        "width": "48px"
+      }
+    }), _vm._v(" "), _c('div', [_vm._v(_vm._s(item.label))])])])
+  }))])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
+    attrs: {
+      "href": "#",
+      "data-toggle": "dropdown",
+      "aria-haspopup": "true",
+      "aria-expanded": "false"
+    }
+  }, [_c('i', {
+    staticClass: "glyphicon glyphicon-th"
+  })])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-0428af25", module.exports)
+  }
+}
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
 
 /***/ })
 /******/ ]);

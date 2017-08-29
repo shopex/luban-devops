@@ -60,6 +60,23 @@ Route::get('/', function(){
 	return redirect(url('/home'));
 });
 
+Auth::routes();
+
 Admin::routes();
+Route::get('/profile', function () {
+    return redirect(Luban::config()->get('sso_url').'profile');
+});
+
+Route::get('/admin-site-menus', function(){
+	return [
+		["label"=>"App", "url"=>"http://www.example.com/", "icon"=>"https://git.shopex.cn/img/favicon.png"],
+		["label"=>"App", "url"=>"http://www.example.com/", "icon"=>"https://git.shopex.cn/img/favicon.png"],
+		["label"=>"App", "url"=>"http://www.example.com/", "icon"=>"https://git.shopex.cn/img/favicon.png"],
+		["label"=>"App", "url"=>"http://www.example.com/", "icon"=>"https://git.shopex.cn/img/favicon.png"],
+		["label"=>"App", "url"=>"http://www.example.com/", "icon"=>"https://git.shopex.cn/img/favicon.png"],
+		["label"=>"App", "url"=>"http://www.example.com/", "icon"=>"https://git.shopex.cn/img/favicon.png"],
+		["label"=>"App", "url"=>"http://www.example.com/", "icon"=>"https://git.shopex.cn/img/favicon.png"],
+	];
+})->middleware('auth');
 
 Route::any('/home', 'HomeController@index')->name('home');

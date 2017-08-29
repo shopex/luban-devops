@@ -27,47 +27,13 @@
 			</div>
 			@else
 
-			<div class="admin-header-searchbar">
-		      <input type="text" />
-
-			  @if (false and isset($searchbar) and $searchbar)
-			  	<searchbar :items="searchbar"></searchbar>
-		      @endif      
-			</div>
+		  @if (isset($searchbar) and $searchbar)
+		  	<searchbar :items="searchbar"></searchbar>
+	      @endif
 
 			<div class="admin-header-content">
 
-				<span class="dropdown">
-				  <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    <i class="glyphicon glyphicon-th"></i>
-				  </a>
-				  <ul class="dropdown-menu dropdown-menu-right app-sel">
-				    <li>
-					    <a href="#">
-					    	<img src="https://git.shopex.cn/img/favicon.png" width="48px" />
-					    	<div>CRM</div>
-					    </a>
-				    </li>
-				    <li>
-					    <a href="">
-					    	<img src="https://git.shopex.cn/img/favicon.png" width="48px" />
-					    	<div>CRM</div>
-					    </a>
-				    </li>
-				    <li>
-					    <a href="">
-					    	<img src="https://git.shopex.cn/img/favicon.png" width="48px" />
-					    	<div>CRM</div>
-					    </a>
-				    </li>
-				    <li>
-					    <a href="">
-					    	<img src="https://git.shopex.cn/img/favicon.png" width="48px" />
-					    	<div>CRM</div>
-					    </a>
-				    </li>
-				  </ul>
-				</span>
+			<appsel :appinfo_url="appinfo_url"></appsel>
 
                 <span class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -187,7 +153,8 @@
   	var app = new Vue({ 
   		el: '#app-header',
   		data: {
-  			searchbar: searchbar
+  			searchbar: searchbar,
+  			appinfo_url: "{{ url('/admin-site-menus') }}"
   		}
   	});
     </script>

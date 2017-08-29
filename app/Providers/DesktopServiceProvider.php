@@ -21,6 +21,17 @@ class DesktopServiceProvider extends ServiceProvider
                 ['label'=>'集群', 'link'=>'nodes'],
                 ['label'=>'消息队列', 'link'=>'queue'],                
             ];
+        $menus[] = ['label'=> '菜单组一', 'items'=>[
+                    ['label'=>'菜单', 'link'=>'/', 'icon'=>'glyphicon-search'],
+                    ['label'=>'菜单', 'link'=>'/'],
+                    [],
+                    ['label'=>'菜单', 'link'=>'/'],
+                    ['label'=>'菜单', 'link'=>'/'],
+                    ['label'=>'菜单', 'link'=>'/'],
+                    ['label'=>'菜单', 'link'=>'/'],
+                    ['label'=>'菜单', 'link'=>'/'],
+                ]];
+
         if(Luban::has('apihub')){
             $menus[] = ['label'=>'开放接口', 'link'=>'open'];
         }
@@ -28,9 +39,9 @@ class DesktopServiceProvider extends ServiceProvider
         view()->share('app_menus', $menus);
 
         view()->share('searchbar', [
-                ['label'=>'搜索用户', 'action'=>'/search/user', 'regexp'=>'[a-z0-9\.\_\+\-]'],
                 ['label'=>'搜索手机号', 'action'=>'/search/phone', 'regexp'=>'^[0-9\s]+$'],
-                ['label'=>'搜索邮箱', 'action'=>'/search/email', 'regexp'=>'^[a-z0-9\.\_\+\-]+@[a-z0-9\.\_\-]+$'],
+                ['label'=>'搜索邮箱', 'action'=>'/home?filters=[[1,"{{value}}","has"]]', 'regexp'=>'^[a-z0-9\.\_\+\-]+@[a-z0-9\.\_\-]+$'],
+                ['label'=>'搜索用户', 'action'=>'/home?filters=[[0,"{{value}}","has"]]', 'regexp'=>'[a-z0-9\.\_\+\-]'],                
             ]);        
     }
 
