@@ -42018,6 +42018,7 @@ module.exports = Vue$3;
 
 Vue.component('searchbar', __webpack_require__(38));
 Vue.component('appsel', __webpack_require__(57));
+Vue.component('finder', __webpack_require__(72));
 
 /***/ }),
 /* 38 */
@@ -42554,6 +42555,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.md = false;
 			this.show = false;
 			this.value = '';
+			this.options_filter = [];
 			$('input', this.$el).blur();
 		},
 		keyup: function keyup(e) {
@@ -42881,6 +42883,1172 @@ if (false) {
      require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-0428af25", module.exports)
   }
 }
+
+/***/ }),
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(75)
+}
+var Component = __webpack_require__(44)(
+  /* script */
+  __webpack_require__(73),
+  /* template */
+  __webpack_require__(74),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Volumes/Main/Data/Sites/luban/devops/resources/assets/vendor/admin/js/components/finder.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] finder.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5a64d39c", Component.options)
+  } else {
+    hotAPI.reload("data-v-5a64d39c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 73 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	mounted: function mounted() {},
+	computed: {
+		col_class: function col_class() {
+			var ret = [];
+			for (var i = 0; i < this.finder.cols.length; i++) {
+				var obj = {};
+				if (this.finder.cols[i].className) {
+					obj[this.finder.cols[i].className] = true;
+				}
+				obj['col-md-' + this.finder.cols[i].size] = true;
+				ret[i] = obj;
+			}
+			return ret;
+		},
+		selected: function selected() {
+			var ret = [];
+			for (var i = 0; i < this.checkbox.length; i++) {
+				if (this.checkbox[i] == true) {
+					ret.push(this.finder.data.items[i].$id);
+				}
+			}
+			return ret;
+		},
+		action_url: function action_url() {
+			var ret = [];
+			for (var i = 0; i < this.finder.actions.length; i++) {
+				ret[i] = this.finder.actions[i].url;
+				if (!ret[i]) {
+					ret[i] = this.finder.baseUrl + '?finder_request=action&id=' + i;
+				}
+			}
+			return ret;
+		}
+	},
+	methods: {
+		reload: function reload(page) {
+			this.items_loading = true;
+			this.current_detail = undefined;
+
+			var filters = [];
+			for (var i = 0; i < this.finder.searchs.length; i++) {
+				if (this.finder.searchs[i].value) {
+					filters.push([i, this.finder.searchs[i].value, this.finder.searchs[i].mode]);
+				}
+			}
+
+			var that = this;
+			$.ajax({
+				'url': this.finder.baseUrl,
+				'data': {
+					'finder_request': 'data',
+					'page': page,
+					'sort': this.finder.sort_id,
+					'tab_id': this.finder.tab_id,
+					'filters': JSON.stringify(filters)
+				},
+				complete: function complete() {
+					that.items_loading = false;
+				}
+			}).done(function (response) {
+				this.checkbox = [];
+				that.finder.data = response;
+			});
+		},
+		select_all: function select_all(e) {
+			if (this.v_select_all) {
+				for (var i = 0; i < this.finder.data.items.length; i++) {
+					this.$set(this.checkbox, i, true);
+				}
+			} else {
+				this.checkbox = [];
+			}
+		},
+		put_workdesk: function put_workdesk(e) {
+			e.stopPropagation();
+			e.preventDefault();
+			for (var i = 0; i < this.checkbox.length; i++) {
+				if (this.checkbox[i]) {
+					if (!this.workdesk_ids[this.finder.data.items[i].$id]) {
+						this.workdesk_ids[this.finder.data.items[i].$id] = true;
+						this.workdesk.push(this.finder.data.items[i]);
+					}
+				}
+			}
+			this.checkbox = [];
+			this.v_select_all = false;
+		},
+		reload_workdesk: function reload_workdesk() {
+			this.finder.data = {
+				items: this.workdesk,
+				currentPage: 1,
+				perPage: this.workdesk.length,
+				total: this.workdesk.length,
+				hasMorePages: false
+			};
+		},
+		clear_workdesk: function clear_workdesk() {
+			this.workdesk_ids = {};
+			this.workdesk = [];
+			this.reload_workdesk();
+		},
+		del_workdesk: function del_workdesk(e) {
+			e.stopPropagation();
+			e.preventDefault();
+			var map = {};
+			for (var i = 0; i < this.checkbox.length; i++) {
+				if (this.checkbox[i]) {
+					this.$delete(this.workdesk_ids, this.workdesk[i].$id);
+					this.workdesk[i] = undefined;
+				}
+			}
+			var new_workdesk = [];
+			for (var i = 0; i < this.workdesk.length; i++) {
+				if (this.workdesk[i]) {
+					new_workdesk.push(this.workdesk[i]);
+				}
+			}
+			this.workdesk = new_workdesk;
+			this.checkbox = [];
+			this.v_select_all = false;
+			this.reload_workdesk();
+		},
+		toggle_detail: function toggle_detail(id, e) {
+			if (["A", "BUTTON", "SELECT", "INPUT"].indexOf(e.target.tagName) >= 0) {
+				return;
+			}
+			if (this.current_detail == id) {
+				this.current_detail = undefined;
+			} else {
+				this.current_detail = id;
+				this.show_panel(id, 0);
+			}
+		},
+		go_page: function go_page(v) {
+			this.reload(this.finder.data.currentPage + v);
+		},
+		select_tab: function select_tab(tab_id) {
+			this.finder.tab_id = tab_id;
+			this.v_select_all = false;
+			this.page_num = 0;
+			if (tab_id == 'workdesk') {
+				this.reload_workdesk();
+			} else {
+				this.reload(0);
+			}
+		},
+		show_panel: function show_panel(item_idx, panel_id) {
+			if (!this.finder.data.items[item_idx]) {
+				return;
+			}
+			if (!this.finder.data.items[item_idx].panels) {
+				this.$set(this.finder.data.items[item_idx], 'panels', {});
+			}
+			if (!this.finder.data.items[item_idx].panels[panel_id]) {
+				this.$set(this.finder.data.items[item_idx].panels, panel_id, 'loading...');
+				var that = this;
+				$.ajax({
+					'url': this.finder.baseUrl,
+					'data': {
+						'finder_request': 'detail',
+						'panel_id': panel_id,
+						'item_id': this.finder.data.items[item_idx].$id
+					}
+				}).done(function (response) {
+					that.$set(that.finder.data.items[item_idx].panels, panel_id, response);
+				});
+			}
+			this.current_panel = panel_id;
+		},
+		sel_mup: function sel_mup(e) {
+			if (!this.batch_select_mode) {
+				return;
+			}
+			this.batch_select_mode = false;
+			this.batch_select_value = undefined;
+			this.batch_select_lastidx = 0;
+			this.unselectable = false;
+		},
+		sel_mdown: function sel_mdown(idx, e) {
+			this.batch_select_mode = true;
+		},
+		sel_mover: function sel_mover(idx, e) {
+			if (!this.batch_select_mode || this.batch_select_lastidx == idx) {
+				return;
+			}
+			var to = Math.max(this.batch_select_lastidx, idx);
+			for (var i = Math.min(this.batch_select_lastidx, idx) + 1; i <= to; i++) {
+				this.$set(this.checkbox, i, this.batch_select_value);
+			}
+			this.batch_select_lastidx = idx;
+		},
+		sel_mout: function sel_mout(idx, e) {
+			if (!this.batch_select_mode) {
+				return;
+			}
+			if (this.batch_select_value == undefined) {
+				if (this.checkbox[idx]) {
+					this.$set(this.checkbox, idx, false);
+				} else {
+					this.$set(this.checkbox, idx, true);
+				}
+				this.batch_select_value = this.checkbox[idx];
+				this.batch_select_lastidx = idx;
+				this.unselectable = true;
+			}
+		}
+	},
+	data: function data() {
+		return {
+			current_detail: undefined,
+			current_panel: 0,
+			checkbox: [],
+			workdesk: [],
+			workdesk_ids: {},
+			v_select_all: false,
+			items_loading: false,
+			panel_loading: false,
+			unselectable: false,
+			batch_action_target: '',
+			batch_action_id: -1,
+			batch_select_mode: false,
+			batch_select_value: undefined,
+			batch_select_lastidx: 0,
+			masker_bgcolor: 'rgba(255,255,255,0.4)'
+		};
+	}
+});
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    ref: "actionbar",
+    staticClass: "finder-action-bar"
+  }, [_c('div', [_c('div', {
+    staticClass: "btn-group",
+    attrs: {
+      "role": "group"
+    }
+  }, _vm._l((_vm.finder.actions), function(action, idx) {
+    return _c('a', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "href": _vm.action_url[idx],
+        "target": action.target
+      },
+      on: {
+        "click": function($event) {
+          _vm.go_action(idx, $event)
+        }
+      }
+    }, [_vm._v("\n\t\t\t\t\t\t" + _vm._s(action.label) + "\n\t\t\t\t\t")])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "finder-tabber"
+  }, [_c('ul', {
+    staticClass: "nav nav-tabs",
+    attrs: {
+      "role": "tablist"
+    }
+  }, [_vm._l((_vm.finder.tabs), function(panel, tab_id) {
+    return _c('li', {
+      class: {
+        'active': tab_id == _vm.finder.tab_id
+      }
+    }, [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.select_tab(tab_id)
+        }
+      }
+    }, [_vm._v(_vm._s(panel.label))])])
+  }), _vm._v(" "), _c('li', {
+    class: {
+      'active': 'workdesk' == _vm.finder.tab_id
+    }
+  }, [_c('a', {
+    on: {
+      "click": function($event) {
+        _vm.select_tab('workdesk')
+      }
+    }
+  }, [_c('i', {
+    staticClass: "glyphicon glyphicon-duplicate"
+  }), _vm._v(" "), _c('sup', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.workdesk.length > 0),
+      expression: "workdesk.length>0"
+    }],
+    staticClass: "badge",
+    staticStyle: {
+      "background": "red"
+    }
+  }, [_vm._v("\n\t\t\t\t\t\t\t\t" + _vm._s(_vm.workdesk.length) + "\n\t\t\t\t\t\t\t")])])])], 2)]), _vm._v(" "), _c('div', {
+    staticClass: "finder-pager"
+  }, [_c('span', {
+    staticClass: "dropdown"
+  }, [_c('button', {
+    staticClass: "btn btn-default dropdown-toggle",
+    attrs: {
+      "type": "button",
+      "id": "dropdownMenu1",
+      "data-toggle": "dropdown",
+      "aria-haspopup": "true"
+    }
+  }, [_vm._v("\n\t\t\t\t    " + _vm._s((_vm.finder.data.currentPage - 1) * _vm.finder.data.perPage + 1) + "\n\t\t\t\t    -\n\t\t\t\t    " + _vm._s(Math.min(_vm.finder.data.currentPage * _vm.finder.data.perPage, _vm.finder.data.total)) + ", 共" + _vm._s(_vm.finder.data.total) + "项\n\t\t\t\t  ")]), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu",
+    attrs: {
+      "aria-labelledby": "dropdownMenu1"
+    }
+  }, [_vm._l((_vm.finder.sorts), function(sort, idx) {
+    return _c('li', [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.finder.sort_id = idx;
+          _vm.reload()
+        }
+      }
+    }, [_vm._v("\n\t\t\t\t\t    \t" + _vm._s(sort.label) + "\n\t\t\t\t\t    \t"), (idx == _vm.finder.sort_id) ? _c('i', {
+      staticClass: "glyphicon glyphicon-ok"
+    }) : _vm._e()])])
+  }), _vm._v(" "), _c('li', {
+    staticClass: "divider",
+    attrs: {
+      "role": "separator"
+    }
+  }), _vm._v(" "), _vm._l((_vm.finder.cols), function(col, col_id) {
+    return _c('li', [_c('a', [_vm._v("\n\t\t\t\t\t\t\t" + _vm._s(col.label) + "\n\t\t\t\t\t\t\t"), _c('i', {
+      staticClass: "glyphicon glyphicon-ok"
+    })])])
+  })], 2)]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "disabled": _vm.finder.data.currentPage == 1
+    },
+    on: {
+      "click": function($event) {
+        _vm.go_page(-1)
+      }
+    }
+  }, [_c('i', {
+    staticClass: "glyphicon glyphicon-menu-left"
+  })]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "disabled": _vm.finder.data.hasMorePages == false
+    },
+    on: {
+      "click": function($event) {
+        _vm.go_page(1)
+      }
+    }
+  }, [_c('i', {
+    staticClass: "glyphicon glyphicon-menu-right"
+  })])])]), _vm._v(" "), _c('div', {
+    ref: "header",
+    staticClass: "finder-header"
+  }, [('workdesk' != _vm.finder.tab_id && _vm.finder.searchs) ? _c('form', {
+    staticClass: "finder-search-bar",
+    on: {
+      "submit": function($event) {
+        _vm.reload()
+      }
+    }
+  }, _vm._l((_vm.finder.searchs), function(search, idx) {
+    return _c('div', {
+      staticClass: "form-inline"
+    }, [_c('div', {
+      staticClass: "form-group"
+    }, [_vm._v("\n\t\t\t\t    " + _vm._s(search.label) + "\n\t\t\t\t  ")]), _vm._v(" "), _c('div', {
+      staticClass: "form-group"
+    }, [(search.type == 'string') ? _c('select', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (search.mode),
+        expression: "search.mode"
+      }],
+      attrs: {
+        "name": "mode[]"
+      },
+      on: {
+        "change": [function($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+            return o.selected
+          }).map(function(o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val
+          });
+          search.mode = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        }, function($event) {
+          search.value && _vm.reload()
+        }]
+      }
+    }, [_c('option', {
+      attrs: {
+        "value": "="
+      }
+    }, [_vm._v("是")]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "!="
+      }
+    }, [_vm._v("不是")]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "begin"
+      }
+    }, [_vm._v("开始于")]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "has"
+      }
+    }, [_vm._v("包含")]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "not_begin"
+      }
+    }, [_vm._v("不开始于")]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "not_has"
+      }
+    }, [_vm._v("不包含")])]) : (search.type == 'number') ? _c('select', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (search.mode),
+        expression: "search.mode"
+      }],
+      attrs: {
+        "name": "mode[]"
+      },
+      on: {
+        "change": [function($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+            return o.selected
+          }).map(function(o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val
+          });
+          search.mode = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        }, function($event) {
+          search.value && _vm.reload()
+        }]
+      }
+    }, [_c('option', {
+      attrs: {
+        "value": "="
+      }
+    }, [_vm._v("=")]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "gt"
+      }
+    }, [_vm._v(">")]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "lt"
+      }
+    }, [_vm._v("<")])]) : _c('span', [_vm._v("\n\t\t\t\t    \t:\n\t\t\t\t    \t"), _c('input', {
+      attrs: {
+        "type": "hidden",
+        "name": "mode[]",
+        "value": "="
+      }
+    })])]), _vm._v(" "), _c('div', {
+      staticClass: "form-group"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (search.value),
+        expression: "search.value"
+      }],
+      attrs: {
+        "type": "text",
+        "name": "value[]"
+      },
+      domProps: {
+        "value": (search.value)
+      },
+      on: {
+        "change": function($event) {
+          _vm.reload()
+        },
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          search.value = $event.target.value
+        }
+      }
+    })])])
+  })) : _vm._e(), _vm._v(" "), ('workdesk' == _vm.finder.tab_id) ? _c('div', {
+    staticClass: "finder-workdesk-bar"
+  }, [_vm._v("\n\t\t\t\t操作台: 一个临时收纳台.\n\t\t\t\t"), _c('button', {
+    staticClass: "btn btn-default btn-sm",
+    on: {
+      "click": _vm.clear_workdesk
+    }
+  }, [_vm._v("清空列表")])]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "finder-row"
+  }, [(_vm.finder.batchActions.length > 0) ? _c('label', {
+    staticClass: "finder-col-sel"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.v_select_all),
+      expression: "v_select_all"
+    }],
+    attrs: {
+      "type": "checkbox"
+    },
+    domProps: {
+      "checked": Array.isArray(_vm.v_select_all) ? _vm._i(_vm.v_select_all, null) > -1 : (_vm.v_select_all)
+    },
+    on: {
+      "click": _vm.select_all,
+      "__c": function($event) {
+        var $$a = _vm.v_select_all,
+          $$el = $event.target,
+          $$c = $$el.checked ? (true) : (false);
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && (_vm.v_select_all = $$a.concat($$v))
+          } else {
+            $$i > -1 && (_vm.v_select_all = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+          }
+        } else {
+          _vm.v_select_all = $$c
+        }
+      }
+    }
+  })]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "row api-top-title"
+  }, _vm._l((_vm.finder.cols), function(col, col_id) {
+    return _c('div', {
+      class: _vm.col_class[col_id]
+    }, [_vm._v("\n\t\t\t\t\t\t" + _vm._s(col.label) + "\n\t\t\t\t\t")])
+  }))])]), _vm._v(" "), _c('div', {
+    ref: "content",
+    attrs: {
+      "name": "finder-content"
+    }
+  }, [_c('div', {
+    staticClass: "finder-body",
+    class: {
+      'unselectable': _vm.unselectable
+    },
+    on: {
+      "mouseup": function($event) {
+        _vm.sel_mup($event)
+      }
+    }
+  }, _vm._l((_vm.finder.data.items), function(item, idx) {
+    return _c('div', {
+      staticClass: "finder-item",
+      class: {
+        'selected': _vm.checkbox[idx], 'detail': _vm.current_detail == idx
+      }
+    }, [_c('div', {
+      staticClass: "finder-row",
+      on: {
+        "mouseout": function($event) {
+          _vm.sel_mout(idx, $event)
+        },
+        "mouseover": function($event) {
+          _vm.sel_mover(idx, $event)
+        }
+      }
+    }, [(_vm.finder.batchActions.length > 0) ? _c('label', {
+      staticClass: "finder-col-sel",
+      on: {
+        "mousedown": function($event) {
+          _vm.sel_mdown(idx, $event)
+        }
+      }
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.checkbox[idx]),
+        expression: "checkbox[idx]"
+      }],
+      attrs: {
+        "type": "checkbox"
+      },
+      domProps: {
+        "checked": Array.isArray(_vm.checkbox[idx]) ? _vm._i(_vm.checkbox[idx], null) > -1 : (_vm.checkbox[idx])
+      },
+      on: {
+        "__c": function($event) {
+          var $$a = _vm.checkbox[idx],
+            $$el = $event.target,
+            $$c = $$el.checked ? (true) : (false);
+          if (Array.isArray($$a)) {
+            var $$v = null,
+              $$i = _vm._i($$a, $$v);
+            if ($$el.checked) {
+              $$i < 0 && (_vm.checkbox[idx] = $$a.concat($$v))
+            } else {
+              $$i > -1 && (_vm.checkbox[idx] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            }
+          } else {
+            _vm.$set(_vm.checkbox, idx, $$c)
+          }
+        }
+      }
+    })]) : _vm._e(), _vm._v(" "), _c('div', {
+      staticClass: "row api-top-title",
+      on: {
+        "click": function($event) {
+          _vm.toggle_detail(idx, $event)
+        }
+      }
+    }, _vm._l((_vm.finder.cols), function(col, col_id) {
+      return _c('div', {
+        class: _vm.col_class[col_id]
+      }, [(typeof(item[col_id]) == 'object' && item[col_id].date) ? _c('span', [_vm._v("\n\t\t\t\t\t\t\t\t" + _vm._s(item[col_id].date) + "\n\t\t\t\t\t\t\t")]) : (col.html) ? _c('span', {
+        domProps: {
+          "innerHTML": _vm._s(item[col_id])
+        }
+      }) : _c('span', [_vm._v(_vm._s(item[col_id]))])])
+    }))]), _vm._v(" "), (_vm.current_detail == idx) ? _c('div', {
+      staticClass: "finder-detail"
+    }, [_c('ul', {
+      staticClass: "nav nav-tabs",
+      attrs: {
+        "role": "tablist"
+      }
+    }, _vm._l((_vm.finder.infoPanels), function(panel, panel_id) {
+      return _c('li', {
+        class: {
+          'active': panel_id == _vm.current_panel
+        }
+      }, [_c('a', {
+        on: {
+          "click": function($event) {
+            _vm.show_panel(idx, panel_id)
+          }
+        }
+      }, [_vm._v(_vm._s(panel.label))])])
+    })), _vm._v(" "), _c('div', {
+      staticClass: "tab-content"
+    }, _vm._l((_vm.finder.infoPanels), function(panel, panel_id) {
+      return (panel_id == _vm.current_panel) ? _c('div', {
+        staticClass: "tab-pane active",
+        attrs: {
+          "role": "tabpanel"
+        }
+      }, [_c('div', {
+        staticClass: "finder-detail-content",
+        domProps: {
+          "innerHTML": _vm._s(item.panels[panel_id])
+        }
+      })]) : _vm._e()
+    }))]) : _vm._e()])
+  })), _vm._v(" "), (_vm.selected.length > 0) ? _c('div', {
+    staticClass: "finder-batch-action-bar"
+  }, [_c('div', [_c('span', [_vm._v("\n\t\t\t\t已选择: " + _vm._s(_vm.selected.length) + "项\n\t\t\t\t")]), _vm._v(" "), _c('form', {
+    attrs: {
+      "target": _vm.batch_action_target,
+      "method": "POST"
+    }
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "finder_request",
+      "value": "batch_action"
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "action_id"
+    },
+    domProps: {
+      "value": _vm.batch_action_id
+    }
+  }), _vm._v(" "), _vm._l((_vm.selected), function(id) {
+    return _c('input', {
+      attrs: {
+        "type": "hidden",
+        "name": "id[]"
+      },
+      domProps: {
+        "value": id
+      }
+    })
+  }), _vm._v(" "), _c('div', {
+    staticClass: "btn-group",
+    attrs: {
+      "role": "group"
+    }
+  }, [_vm._l((_vm.finder.batchActions), function(action, idx) {
+    return _c('button', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "type": "submit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.batch_action_id = idx;
+          _vm.batch_action_target = action.target
+        }
+      }
+    }, [_vm._v("\n\t\t\t\t\t\t\t\t" + _vm._s(action.label) + "\n\t\t\t\t\t\t")])
+  }), _vm._v(" "), ('workdesk' == _vm.finder.tab_id) ? _c('button', {
+    staticClass: "btn btn-default",
+    on: {
+      "click": function($event) {
+        _vm.del_workdesk($event)
+      }
+    }
+  }, [_vm._v("移出操作台")]) : _c('button', {
+    staticClass: "btn btn-default",
+    on: {
+      "click": function($event) {
+        _vm.put_workdesk($event)
+      }
+    }
+  }, [_vm._v("放入操作台")])], 2)], 2)])]) : _vm._e(), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.items_loading),
+      expression: "items_loading"
+    }],
+    staticClass: "finder-masker",
+    style: ({
+      'background': _vm.masker_bgcolor
+    })
+  })])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-5a64d39c", module.exports)
+  }
+}
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(76);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(42)("42a22fad", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../node_modules/_css-loader@0.28.4@css-loader/index.js!../../../../../../node_modules/_vue-loader@12.2.2@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5a64d39c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/_vue-loader@12.2.2@vue-loader/lib/selector.js?type=styles&index=0!./finder.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/_css-loader@0.28.4@css-loader/index.js!../../../../../../node_modules/_vue-loader@12.2.2@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5a64d39c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/_vue-loader@12.2.2@vue-loader/lib/selector.js?type=styles&index=0!./finder.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.finder-body .row, .finder-header .finder-row .row{\n\tpadding-left: 0.5rem;\n\tline-height: 3rem;\n\theight:3rem;\n\twhite-space: nowrap;\n\toverflow: hidden;\n\tcursor: default;\n}\n.finder-header .finder-row{\n\tborder-left: 0.3rem solid #666;\t\n\tbackground: #666;\n\tcolor:#fff;\n}\n.finder-group-title.row{\n\tbackground: #f0f0f0;\n\tcolor:#000;\n}\n.finder-row{\n\tclear:both;\n\tdisplay: flex;\n}\n.finder-col-sel{\n\tflex:1 0 auto;\n\twidth:3rem;\n\tz-index: 99;\n\ttext-align: center;\n\tline-height: 3rem;\n\tmargin:0;\n}\n.finder-row .row{\n\tflex: 999;\n\tcursor: pointer;\n}\n.finder-item{\n\tborder-left: 0.3rem solid transparent;\n\tborder-bottom: 1px solid #ccc;\n}\n.finder-item.detail{\n\tborder-left-color: #0769ad;\n}\n.finder-item.selected{\n\tbackground: #f0f0f0;\n}\n.finder-detail{\n\tborder-top: 1px dashed #ccc;\n}\n.finder-detail .nav-tabs{\n\tpadding: 0.5rem 0.5rem 0 0.5rem;\n\tdisplay: flex;\n\t/*justify-content: center;*/\n}\n.finder-detail .nav-tabs li{\n}\n.finder-detail .nav > li > a{\n\tpadding: 0.3rem 1rem;\n\tcursor: pointer;\n}\n.finder-detail-content{\n\tmargin: 0.5rem;\n\tmin-height: 30rem;\n\toverflow: hidden;\n\tword-break: break-all;\n}\n.finder-search-bar{\n\tborder-top: 1px solid #ccc;\n\tpadding: 0.5rem;\n\tbackground: #f0f0f0;\n}\n.finder-workdesk-bar{\n\tborder-top: 1px solid #ccc;\n\tbackground: #9f9;\n\tcolor: #000;\n\tpadding: 0.3rem;\n\ttext-align: center;\n}\n.finder-batch-action-bar{\n\tposition: absolute;\n\tbottom: 0;\n\tleft:0;\n\tright:0;\n\tdisplay: flex;\n\tjustify-content: center;\n}\n.finder-batch-action-bar>div{\n\tborder:1px solid #ccc;\n\tpadding:1rem;\n\tbackground: #000;\n\tcolor: #ccc;\n\tz-index: 999;\n\tborder-top-left-radius: 1rem;\n\tborder-top-right-radius: 1rem;\n\tborder-bottom: none;\n}\n.finder-batch-action-bar .btn-default{\n\tbackground: #000;\n\tcolor: #ccc;\n}\n.finder-action-bar > div{\n\tline-height: 3rem;\n}\n.finder-tabber{\n\tflex:1; \n\tpadding-left: 2.5rem;\n\tmargin:-0.4rem; \n\tdisplay: flex; \n\talign-items: flex-end;\n}\n.finder-tabber .nav-tabs{\n\tdisplay: flex;\n\tjustify-content: center;\n\tborder-bottom: none;\n}\n.finder-tabber .nav > li > a{\n\tcursor: pointer;\n\tpadding: 0.7rem 1.5rem;\n}\n.finder-action-bar{\n\tdisplay: flex;\n}\n.finder-pager{\n\tflex:0 0;\n\ttext-align: right;\n\twhite-space: nowrap;\n}\n.finder-pager >.dropdown > .btn-default{\n\tborder: none;\n}\n.finder-masker{\n\tbackground: #fff; \n\tz-index: 9999; \n\tposition: absolute; \n\twidth: 100%; \n\theight: 100%; \n\tleft:0; top:0;\n}\n.finder-search-bar .form-inline{\n\tdisplay: inline-block;\n\tmargin: 0 3rem 0.5rem 0;\n}\n.finder-user-header{\n\tborder-top: 1px solid #ccc;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

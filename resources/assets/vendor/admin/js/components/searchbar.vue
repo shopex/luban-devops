@@ -90,6 +90,7 @@ export default {
 			this.md = false;
 			this.show = false;
 			this.value = '';
+			this.options_filter = [];
 			$('input', this.$el).blur();			
 		},
 		keyup (e){
