@@ -8355,6 +8355,14 @@ button.close {
   overflow: hidden;
 }
 
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .admin-page {
   position: absolute;
   top: 0;

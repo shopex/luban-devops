@@ -32,6 +32,9 @@ class HomeController extends Controller
                     ->addColumn('姓名', 'name')->size(2)->modifier(function($str){
                         return strtoupper($str);
                     })
+                    ->addColumn('姓名', 'name')->size(2)->modifier(function($str){
+                        return '<a href="asdf">asdfs</a>';
+                    })->html(true)                    
                     ->addColumn('邮箱', 'email')->size(6)
                     ->addColumn('创建时间', 'created_at')->size(2)
                     ->addBatchAction('批量操作1', [$this, 'bat_action_1'])->newWindow()

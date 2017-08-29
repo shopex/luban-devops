@@ -130,14 +130,18 @@
 @endsection
 
 @section('content')
-<div class="finder-body">
+<div class="finder-body" v-on:mouseup="sel_mup($event)" v-bind:class="{'unselectable': unselectable}">
 
 	<div class="finder-item" v-for="(item,idx) in finder.data.items" v-bind:class="{'selected':checkbox[idx], 'detail':current_detail==idx}">
-		<div class="finder-row">
-			<label class="finder-col-sel" v-if="finder.batchActions.length>0">
+		<div class="finder-row"
+				v-on:mouseout="sel_mout(idx,$event)"
+				v-on:mouseover="sel_mover(idx,$event)">
+			<label class="finder-col-sel" 
+				v-on:mousedown="sel_mdown(idx,$event)"
+				v-if="finder.batchActions.length>0">
 				<input type="checkbox" v-model="checkbox[idx]" />
 			</label>
-			<div class="row api-top-title" v-on:click="toggle_detail(idx)">
+			<div class="row api-top-title" v-on:click="toggle_detail(idx, $event)">
 				<div v-for="(col, col_id) in finder.cols" v-bind:class="col_class[col_id]">
 					<span v-if="typeof(item[col_id])=='object' && item[col_id].date">
 						@{{item[col_id].date}}
@@ -319,7 +323,10 @@ $(function(){
 		  this.v_select_all = false;
           this.reload_workdesk();
 		},
-		toggle_detail: function(id){
+		toggle_detail: function(id, e){
+			if( ["A","BUTTON","SELECT","INPUT"].indexOf(e.target.tagName)>=0 ){
+				return;
+			}
 			if(this.current_detail==id){
 				this.current_detail = undefined;
 			}else{
@@ -362,6 +369,43 @@ $(function(){
 				});
 			}
 			this.current_panel = panel_id;
+		},
+		sel_mup: function(e){
+			if(!this.batch_select_mode){
+				return;
+			}
+			this.batch_select_mode = false;
+			this.batch_select_value = undefined;
+			this.batch_select_lastidx = 0;
+			this.unselectable = false;
+		},
+		sel_mdown: function(idx,e){
+			this.batch_select_mode = true;
+		},
+		sel_mover: function(idx,e){
+			if(!this.batch_select_mode || this.batch_select_lastidx==idx){
+				return;
+			}
+			var to = Math.max(this.batch_select_lastidx, idx);
+			for(var i=Math.min(this.batch_select_lastidx, idx)+1; i<=to; i++){
+				this.$set(this.checkbox, i, this.batch_select_value);
+			}
+			this.batch_select_lastidx = idx;
+		},
+		sel_mout: function(idx,e){
+			if(!this.batch_select_mode){
+				return;
+			}
+			if(this.batch_select_value==undefined){
+				if(this.checkbox[idx]){
+					this.$set(this.checkbox, idx, false);
+				}else{
+					this.$set(this.checkbox, idx, true);
+				}
+				this.batch_select_value = this.checkbox[idx];
+				this.batch_select_lastidx = idx;
+				this.unselectable = true;
+			}
 		}
 	  },
 	  data: {
@@ -374,8 +418,12 @@ $(function(){
 	    v_select_all: false,
 	    items_loading: false,
 	    panel_loading: false,
+	    unselectable: false,
 		batch_action_target: '',
 		batch_action_id: -1,
+		batch_select_mode: false,
+		batch_select_value: undefined,
+		batch_select_lastidx: 0,
 		masker_bgcolor: 'rgba(255,255,255,0.4)'
 	  }
 	})
