@@ -12,8 +12,8 @@
   </head>
 
 <body>
-	<div class="admin-page">
-		<div class="admin-header" id="app-header">
+	<div class="admin-page" id="app">
+		<div class="admin-header">
 
 			<div class="admin-header-title">
 				<img class="appbanner" src="{{ url('/appbanner.png') }}" />
@@ -63,56 +63,19 @@
 
     	<div class="admin-main">
 	    	<div class="admin-sidebar">
-
-		      <ul>
-		      	@foreach ($app_menus as $menu)
-
-		  		@if (Auth::guest())
-		  			@if (isset($menu['user-only']) and $menu['user-only'])
-		  				@continue;
-		  			@endif
-		  		@else
-		  			@if (isset($menu['guest-only']) and $menu['guest-only'])
-		  				@continue;
-		  			@endif
-		  		@endif
-
-		      	@if (isset($menu['items']) and count($menu['items']) > 0)
-		        <li>
-		          <a>{{$menu['label']}} <span class="caret"></span></a>
-		          <ul>
-		          	@foreach ($menu['items'] as $item)
-			          	@if (isset($item['label']))
-				          	<li>
-				          	<a href="{{ url($item['link']) }}">
-				          	@if (isset($item['icon']))
-				          	<i class="glyphicon {{ $item['icon'] }}"></i>
-				          	@else
-				          	<i style="display:inline-block;width:1em"></i>
-				          	@endif
-				          	{{$item['label']}}
-				          	</a>
-				          	</li>
-			          	@else
-				          	<li role="separator" class="divider"></li>
-			          	@endif
-		          	@endforeach
-		          </ul>
-		        </li>
-		      	@else	        
-				<li><a href="{{ url($menu['link']) }}">{{$menu['label']}}</a></li>	        
-		        @endif
-				@endforeach
-		      </ul>
-
+	    		<appmenu :menus="menus"></appmenu>
 			</div>
 
 			<div class="main-content">
 				<div class="main-header">
 					<div class="main-header-basic">
-						<ol class="breadcrumb">
-						  <li class="active">@yield('title')</li>
-						</ol>
+          @if (array_key_exists('navpath', View::getSections()))
+            @yield('navpath')
+          @else
+            <ol class="breadcrumb">
+              <li class="active">@yield('title')</li>
+            </ol>          
+          @endif
 						<div class="main-header-action">
 							@yield('action-bar')
 						</div>
@@ -140,7 +103,6 @@
     		<div class="indicator-process"></div>
     	</div>
     </div>
-
     </body>
 
     <script>
@@ -151,10 +113,11 @@
     @endif;
 
   	var app = new Vue({ 
-  		el: '#app-header',
+  		el: '#app',
   		data: {
   			searchbar: searchbar,
-  			appinfo_url: "{{ url('/admin-site-menus') }}"
+  			appinfo_url: "{{ url('/admin-site-menus') }}",
+  			menus: {!! json_encode($app_menus) !!}
   		}
   	});
     </script>

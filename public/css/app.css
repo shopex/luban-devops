@@ -8495,25 +8495,6 @@ button.close {
   margin: 1rem;
 }
 
-.admin-sidebar ul {
-  margin: 0;
-  padding: 0;
-}
-
-.admin-sidebar li {
-  list-style: none;
-}
-
-.admin-sidebar > ul > li > a {
-  padding-left: 1rem;
-  line-height: 4rem;
-  height: 4rem;
-  display: block;
-  text-decoration: none;
-  border-bottom: 1px solid #f0f0f0;
-  color: #666;
-}
-
 .main-header .main-header-basic {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -8554,5 +8535,53 @@ button.close {
 
 li > a {
   cursor: default;
+}
+
+.loading {
+  margin: 100px auto 0;
+  width: 70px;
+  text-align: center;
+}
+
+.loading > div {
+  width: 18px;
+  height: 18px;
+  background-color: #333;
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: loading-bouncedelay 1.4s infinite ease-in-out both;
+  animation: loading-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.loading .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.loading .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes loading-bouncedelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0);
+  }
+
+  40% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes loading-bouncedelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
 

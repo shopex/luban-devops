@@ -6,8 +6,7 @@
 						<a v-for="(action, idx) in finder.actions" 
 							class="btn btn-default" 
 							v-bind:href="action_url[idx]"
-							v-bind:target="action.target"
-							v-on:click="go_action(idx, $event)">
+							v-bind:target="action.target">
 							{{action.label}}
 						</a>
 					</div>
@@ -29,12 +28,12 @@
 				</div>
 				<div class="finder-pager">
 					<span class="dropdown">
-					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true">
+					  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true">
 					    {{(finder.data.currentPage-1)*finder.data.perPage+1}}
 					    -
 					    {{Math.min(finder.data.currentPage*finder.data.perPage,finder.data.total)}}, 共{{finder.data.total}}项
 					  </button>
-					  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					  <ul class="dropdown-menu">
 					    <li v-for="(sort, idx) in finder.sorts">
 						    <a v-on:click="finder.sort_id=idx;reload()">
 						    	{{sort.label}}
@@ -43,9 +42,9 @@
 					    </li>
 					    <li role="separator" class="divider"></li>
 						<li v-for="(col, col_id) in finder.cols">
-							<a>
+							<a v-on:click="toggle_col(col_id)">
 								{{col.label}}
-								<i class="glyphicon glyphicon-ok"></i>
+								<i class="glyphicon glyphicon-ok" v-if="!col.hidden"></i>
 							</a>
 						</li>
 					  </ul>
@@ -95,14 +94,16 @@
 
 				<div class="finder-workdesk-bar" v-if="'workdesk'==finder.tab_id">
 					操作台: 一个临时收纳台.
-					<button class="btn btn-default btn-sm" v-on:click="clear_workdesk">清空列表</button>
+					<button class="btn btn-default btn-sm" 
+					v-bind:disabled="this.workdesk.length==0"
+					v-on:click="clear_workdesk">清空列表</button>
 				</div>
 				<div class="finder-row">
 					<label class="finder-col-sel" v-if="finder.batchActions.length>0">
 						<input type="checkbox" v-on:click="select_all" v-model="v_select_all" />
 					</label>
 					<div class="row api-top-title">
-						<div v-for="(col, col_id) in finder.cols" v-bind:class="col_class[col_id]">
+						<div v-for="(col, col_id) in finder.cols" v-bind:class="col_class[col_id]" v-if="!col.hidden">
 							{{col.label}}
 						</div>
 					</div>
@@ -122,7 +123,7 @@
 							<input type="checkbox" v-model="checkbox[idx]" />
 						</label>
 						<div class="row api-top-title" v-on:click="toggle_detail(idx, $event)">
-							<div v-for="(col, col_id) in finder.cols" v-bind:class="col_class[col_id]">
+							<div v-for="(col, col_id) in finder.cols" v-bind:class="col_class[col_id]" v-if="!col.hidden">
 								<span v-if="typeof(item[col_id])=='object' && item[col_id].date">
 									{{item[col_id].date}}
 								</span>
@@ -132,7 +133,7 @@
 						</div>
 					</div>
 					<div class="finder-detail" v-if="current_detail==idx">
-						  <ul class="nav nav-tabs" role="tablist">
+						  <ul class="nav nav-tabs" role="tablist" v-if="finder.infoPanels.length>1">
 						    <li v-for="(panel, panel_id) in finder.infoPanels" v-bind:class="{'active': panel_id==current_panel}">
 						    	<a v-on:click="show_panel(idx, panel_id)">{{panel.label}}</a>
 						    </li>
@@ -146,30 +147,31 @@
 				</div>
 			</div>
 
-			<div class="finder-batch-action-bar" v-if="selected.length>0">
-				<div>
-					<span>
-					已选择: {{selected.length}}项
-					</span>
+			<transition name="finder-slide-bottom">
+				<div class="finder-batch-action-bar" v-if="selected.length>0">
+					<div>
+						<span>{{selected.length}}</span>
 
-					<form v-bind:target="batch_action_target" method="POST">
-						<input type="hidden" name="finder_request" value="batch_action" />
-						<input type="hidden" name="action_id" v-bind:value="batch_action_id" />
-						<input type="hidden" name="id[]" v-bind:value="id" v-for="id in selected" />
+						<form v-bind:target="batch_action_target" method="POST">
+							<input type="hidden" name="finder_request" value="batch_action" />
+							<input type="hidden" name="action_id" v-bind:value="batch_action_id" />
+							<input type="hidden" name="id[]" v-bind:value="id" v-for="id in selected" />
 
-						<div class="btn-group" role="group">
-							<button v-for="(action, idx) in finder.batchActions"
-									v-on:click="batch_action_id=idx;batch_action_target=action.target"
-									type="submit"
-									class="btn btn-default">
-									{{action.label}}
-							</button>
+							<div class="btn-group" role="group">
+								<button v-for="(action, idx) in finder.batchActions"
+										v-on:click="batch_action_id=idx;batch_action_target=action.target"
+										type="submit"
+										class="btn btn-default">
+										{{action.label}}
+								</button>
+							</div>
+							
 							<button v-if="'workdesk'==finder.tab_id" v-on:click="del_workdesk($event)" class="btn btn-default">移出操作台</button>
 							<button v-else v-on:click="put_workdesk($event)" class="btn btn-default">放入操作台</button>
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
-			</div>
+			</transition>
 
 			<div v-show="items_loading" class="finder-masker" v-bind:style="{'background': masker_bgcolor}"></div>
 		</div>
@@ -237,7 +239,7 @@
 }
 .finder-detail-content{
 	margin: 0.5rem;
-	min-height: 30rem;
+	min-height: 15rem;
 	overflow: hidden;
 	word-break: break-all;
 }
@@ -263,13 +265,28 @@
 }
 .finder-batch-action-bar>div{
 	border:1px solid #ccc;
-	padding:1rem;
-	background: #000;
-	color: #ccc;
+	padding:1.5rem .5rem .5rem .5rem;
 	z-index: 999;
 	border-top-left-radius: 1rem;
 	border-top-right-radius: 1rem;
 	border-bottom: none;
+	background: #000;
+	color: #ccc;	
+}
+.finder-batch-action-bar>div span{
+	border:0.5rem solid #000;	
+	background: #666;
+	color: #ccc;
+	position: absolute;
+	height:4rem;
+	width:4rem;
+	text-align: center;
+	display: block;
+	top: -2.5rem;
+	border-radius: 100%;
+	line-height: 3rem;
+	left: 50%;
+	margin-left: -2rem;
 }
 .finder-batch-action-bar .btn-default{
 	background: #000;
@@ -321,14 +338,25 @@
 .finder-user-header{
 	border-top: 1px solid #ccc;
 }
+
+.finder-slide-bottom-enter-active {
+  transition: all .3s ease;
+}
+.finder-slide-bottom-leave-active {
+  transition: all .3s ease;
+}
+.finder-slide-bottom-enter, .finder-slide-bottom-leave-to{
+  transform: translateY(100%);
+  opacity: 0;
+}
 </style>
 
 <script>
 export default {
-	  mounted: function(){
+	  mounted (){
 	  },
 	  computed: {
-	  	col_class: function(){
+	  	col_class (){
 	  		var ret = [];
 	  		for(var i=0;i<this.finder.cols.length;i++){
 	  			var obj = {};
@@ -340,7 +368,7 @@ export default {
 	  		}
 	  		return ret;
 	  	},
-	  	selected: function(){
+	  	selected (){
 	  		var ret = [];
 	  		for(var i=0; i<this.checkbox.length;i++){
 	  			if(this.checkbox[i]==true){
@@ -349,7 +377,7 @@ export default {
 	  		}
 	  		return ret;
 	  	},
-	  	action_url: function(){
+	  	action_url (){
 	  		var ret = [];
 	  		for(var i=0; i<this.finder.actions.length; i++){
 	  			ret[i] = this.finder.actions[i].url;
@@ -361,7 +389,7 @@ export default {
 	  	}
 	  },
 	  methods:{
-	  	reload: function(page){
+	  	reload (page){
 	  		this.items_loading = true;
 			this.current_detail = undefined;
 
@@ -382,7 +410,7 @@ export default {
 					'tab_id': this.finder.tab_id,
 					'filters': JSON.stringify(filters)
 				},
-				complete: function(){
+				complete (){
 					that.items_loading = false;
 				}
 			}).done(function(response){
@@ -390,7 +418,7 @@ export default {
 				that.finder.data = response;
 			});
 	  	},
-		select_all: function(e){
+		select_all (e){
 			if(this.v_select_all){
 				for(var i=0;i<this.finder.data.items.length;i++){
 					this.$set(this.checkbox, i, true);
@@ -399,7 +427,10 @@ export default {
 				this.checkbox = [];
 			}
 		},
-		put_workdesk: function(e){
+		toggle_col (id){
+			this.$set(this.finder.cols[id], "hidden", this.finder.cols[id].hidden?false:true);
+		},
+		put_workdesk (e){
           e.stopPropagation();
           e.preventDefault();
           for(var i=0; i<this.checkbox.length; i++){
@@ -413,7 +444,7 @@ export default {
           this.checkbox = [];
 		  this.v_select_all = false;
 		},
-		reload_workdesk: function(){
+		reload_workdesk (){
 			this.finder.data = {
 				items: this.workdesk,
 				currentPage: 1,
@@ -422,12 +453,12 @@ export default {
 				hasMorePages: false
 			}
 		},
-		clear_workdesk: function(){
+		clear_workdesk (){
 			this.workdesk_ids={};
 			this.workdesk=[];
 			this.reload_workdesk();
 		},
-		del_workdesk: function(e){
+		del_workdesk (e){
           e.stopPropagation();
           e.preventDefault();
           var map = {};
@@ -448,7 +479,7 @@ export default {
 		  this.v_select_all = false;
           this.reload_workdesk();
 		},
-		toggle_detail: function(id, e){
+		toggle_detail (id, e){
 			if( ["A","BUTTON","SELECT","INPUT"].indexOf(e.target.tagName)>=0 ){
 				return;
 			}
@@ -459,10 +490,10 @@ export default {
 				this.show_panel(id, 0);
 			}
 		},
-		go_page: function(v){
+		go_page (v){
 			this.reload(this.finder.data.currentPage+v);
 		},
-		select_tab: function(tab_id){
+		select_tab (tab_id){
 			this.finder.tab_id = tab_id;
 			this.v_select_all = false;
 			this.page_num = 0;
@@ -472,7 +503,7 @@ export default {
 				this.reload(0);
 			}
 		},
-		show_panel: function(item_idx, panel_id){	
+		show_panel (item_idx, panel_id){	
 			if(!this.finder.data.items[item_idx]){
 				return;
 			}
@@ -495,7 +526,7 @@ export default {
 			}
 			this.current_panel = panel_id;
 		},
-		sel_mup: function(e){
+		sel_mup (e){
 			if(!this.batch_select_mode){
 				return;
 			}
@@ -504,10 +535,10 @@ export default {
 			this.batch_select_lastidx = 0;
 			this.unselectable = false;
 		},
-		sel_mdown: function(idx,e){
+		sel_mdown (idx,e){
 			this.batch_select_mode = true;
 		},
-		sel_mover: function(idx,e){
+		sel_mover (idx,e){
 			if(!this.batch_select_mode || this.batch_select_lastidx==idx){
 				return;
 			}
@@ -517,7 +548,7 @@ export default {
 			}
 			this.batch_select_lastidx = idx;
 		},
-		sel_mout: function(idx,e){
+		sel_mout (idx,e){
 			if(!this.batch_select_mode){
 				return;
 			}
